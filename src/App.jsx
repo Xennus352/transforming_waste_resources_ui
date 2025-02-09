@@ -11,7 +11,7 @@ import OrgainzationPage from "./pages/OrgainzationPage";
 import Hero from "./pages/Hero";
 import Register from "./pages/auth/Register";
 import Login from "./pages/auth/Login";
-import Footer from "./Footer";
+import Footer from "./components/Footer";
 import ErrorPage from "./components/ErrorPage";
 import { Toaster } from "react-hot-toast";
 

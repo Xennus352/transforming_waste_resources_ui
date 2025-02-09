@@ -1,20 +1,21 @@
 import { BookMarked, Heart, MessageSquareCode } from "lucide-react";
 import React from "react";
 
-const SingleCard = ({ blog }) => {
+const SingleCard = ({ post }) => {
+
   return (
     <div className="">
       <div className="card lg:card-side shadow-xl bg-base-100 ">
         <figure className="min-w-56">
           <img
-            src={blog.waste_pic}
+            src={post.picture}
             className="h-full w-full object-cover"
-            alt="Blog Information"
+            alt="post pic"
           />
         </figure>
         <div className="card-body">
-          <h2 className="card-title">{blog.title}</h2>
-          <p>{blog.description}</p>
+          <h2 className="card-title">{post.title}</h2>
+          <p>{post.content}</p>
           <div className="card-actions justify-end">
             <button className="btn btn-primary">
               {" "}

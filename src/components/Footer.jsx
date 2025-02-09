@@ -1,11 +1,12 @@
 import React from "react";
 import { Link, useLocation, useMatch } from "react-router-dom";
-import ModalBtn from "./components/modal/ModalBtn";
-import { useGetCurrentUser } from "./react-query/user";
+import ModalBtn from "./modal/ModalBtn";
+import { useGetCurrentUser } from "../react-query/user";
 
 const Footer = () => {
   const { pathname } = useLocation();
-  const isAppRoute = useMatch("/app/*") || useMatch("/dashboard/*");
+  const isAppRoute = useMatch("/app/*");
+  const isAdminRoute = useMatch("/dashboard/*");
 
   // get current user
   const { data: user, isLoading } = useGetCurrentUser();
@@ -20,12 +21,7 @@ const Footer = () => {
   return (
     <div
       className={`${
-        pathname == "/hero" ||
-        pathname == "/auth/register" ||
-        pathname == "/auth/login" ||
-        isAppRoute
-          ? "hidden"
-          : "block"
+        pathname == "/hero" || isAppRoute || isAdminRoute ? "hidden" : "block"
       }`}
     >
       <footer className="footer footer-center bg-base-200 text-base-content rounded p-10">

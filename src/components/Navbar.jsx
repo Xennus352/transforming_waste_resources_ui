@@ -6,7 +6,8 @@ import { Building2, Contact, House, Info, LayoutGrid } from "lucide-react";
 const Navbar = () => {
   const { pathname } = useLocation();
 
-  const isAppRoute = useMatch("/app/*") || useMatch("/dashboard/*");
+  const isAppRoute = useMatch("/app/*");
+  const isAdminRoute = useMatch("/dashboard/*");
 
   const routes = [
     {
@@ -38,10 +39,7 @@ const Navbar = () => {
   return (
     <div
       className={`${
-        pathname == "/hero" ||
-        pathname == "/auth/register" ||
-        pathname == "/auth/login" ||
-        isAppRoute
+        pathname == "/hero" || isAppRoute || isAdminRoute
           ? "hidden"
           : "block bg-slate-600 bg-opacity-50 sticky top-0 z-40 backdrop-blur-md rounded-b-lg"
       }`}
