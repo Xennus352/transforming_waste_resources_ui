@@ -2,9 +2,9 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import { modal } from "../../utils/modal";
 
-export const feedbackPost = async (data) => {
+export const createBlogPost = async (data) => {
   // php api for feedback
-  const URL = "http://localhost:8000/api/feedback/create_feedback.php";
+  const URL = "http://localhost:8000/api/blog/create_blog.php";
   try {
     // Get the session token from localStorage
     const sessionToken = localStorage.getItem("session_token");
@@ -34,13 +34,12 @@ export const feedbackPost = async (data) => {
   } catch (error) {
     console.log("Error during request:", error);
     toast.error("An error occurred. Please try again later.");
-    throw error;
   }
 };
 
-export const getFeedback = async () => {
+export const getBlogPost = async () => {
   // php api for feedback
-  const URL = "http://localhost:8000/api/feedback/get_feedback.php";
+  const URL = "http://localhost:8000/api/blog/get_blog.php";
   try {
     const response = await axios.get(URL);
 
@@ -54,15 +53,13 @@ export const getFeedback = async () => {
   } catch (error) {
     console.log("Error during request:", error);
     toast.error("An error occurred. Please try again later.");
-    throw error;
+    throw error
   }
 };
 
-
-
-export const deleteFeedback = async (id) => {
+export const deleteBlogPost = async (id) => {
   try {
-    const URL = "http://localhost:8000/api/feedback/delete_feedback.php";
+    const URL = "http://localhost:8000/api/blog/delete_blog.php";
     const response = await axios.delete(URL, { data: { id } });
 
     if (response.data.success) {
@@ -77,4 +74,4 @@ export const deleteFeedback = async (id) => {
     toast.error("An error occurred. Please try again later.");
     throw error;
   }
-}
+};

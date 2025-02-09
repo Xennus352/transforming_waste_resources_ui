@@ -5,7 +5,7 @@ import { useGetCurrentUser } from "./react-query/user";
 
 const Footer = () => {
   const { pathname } = useLocation();
-  const isAppRoute = useMatch("/app/*");
+  const isAppRoute = useMatch("/app/*") || useMatch("/dashboard/*");
 
   // get current user
   const { data: user, isLoading } = useGetCurrentUser();

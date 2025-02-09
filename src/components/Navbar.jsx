@@ -6,7 +6,7 @@ import { Building2, Contact, House, Info, LayoutGrid } from "lucide-react";
 const Navbar = () => {
   const { pathname } = useLocation();
 
-  const isAppRoute = useMatch("/app/*");
+  const isAppRoute = useMatch("/app/*") || useMatch("/dashboard/*");
 
   const routes = [
     {

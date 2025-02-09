@@ -20,9 +20,9 @@ const AddBlogForm = () => {
           <textarea className="textarea textarea-info"></textarea>
         </label>
         <label htmlFor="photo">
-          <div className="p-3 m-3 cursor-pointer border border-primary hover:rounded-md hover:text-slate-400 transition-all duration-100 flex items-center gap-3 justify-between">
+          <div className="p-3 m-3 cursor-pointer border border-primary hover:rounded-md  bg-base-200  hover:text-slate-400 transition-all duration-100 flex items-center gap-3 justify-between">
             <p>Choose Your Photo</p>
-            <ImageUp  size={38}/>
+            <ImageUp size={38} />
           </div>
           <input
             id="photo"

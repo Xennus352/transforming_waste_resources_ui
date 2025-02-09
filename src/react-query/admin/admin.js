@@ -1,15 +1,14 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
-  deleteFeedback,
-  feedbackPost,
-  getFeedback,
-} from "../apis/feedback/feedback_control";
+  createBlogPost,
+  deleteBlogPost,
+  getBlogPost,
+} from "../../apis/admin/blog_control";
 
-export const useCreateFeedback = () => {
+export const useCreateBlog = () => {
   const queryClient = useQueryClient();
-
   return useMutation({
-    mutationFn: (data) => feedbackPost(data),
+    mutationFn: (data) => createBlogPost(data),
     onSuccess: () => {
       // Invalidate and refetch
       queryClient.invalidateQueries(["admin-create-blog"]);
@@ -17,22 +16,22 @@ export const useCreateFeedback = () => {
   });
 };
 
-export const useGetFeedback = () => {
+export const useGetBlog = () => {
   return useQuery({
-    queryKey: ["get-feedback"],
-    queryFn: getFeedback,
+    queryKey: ["admin-create-blog"],
+    queryFn: getBlogPost,
     refetchInterval: 10000,
   });
 };
 
-export const useFeedbackDelete = () => {
+export const useDeleteBlog = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: deleteFeedback,
+    mutationFn: deleteBlogPost,
     onSuccess: () => {
-      // Invalidate and refetch the feedback list
-      queryClient.invalidateQueries(["get-feedback"]);
+      // Invalidate and refetch the blog list
+      queryClient.invalidateQueries(["admin-create-blog"]);
     },
     onError: (error) => {
       console.error("Mutation error:", error);
