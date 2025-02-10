@@ -1,16 +1,26 @@
 import React from "react";
-import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
-import { BookCopy, BookMarked, House, LogOut, Rss, Settings, Store, Webhook } from "lucide-react";
+import {
+  BookCopy,
+  BookMarked,
+  House,
+  LogOut,
+  Rss,
+  Settings,
+  Store,
+  Webhook,
+} from "lucide-react";
+import { useLogout } from "../../react-query/auth";
 
-const AppNav = () => {
+const AppNav = ({ user }) => {
   const navigate = useNavigate();
 
+  const { mutate: logout } = useLogout();
   // routes
   const routes = [
     {
       path: "feed",
-      title: "Home Feed",
+      title: "Feed",
       icon: <House />,
     },
     {
@@ -26,12 +36,12 @@ const AppNav = () => {
 
     {
       path: "hand-made-guide",
-      title: "Hand Made Guide",
+      title: "Handmade",
       icon: <BookCopy />,
     },
     {
       path: "save",
-      title: "Saved Collections",
+      title: "Saved",
       icon: <BookMarked />,
     },
     {
@@ -53,7 +63,10 @@ const AppNav = () => {
                 className="btn btn-outline w-full mt-3"
                 onClick={() => navigate(`/app/${r.path}`, { replace: true })}
               >
-                {r.title} {r.icon}
+                <span className="hidden sm:hidden md:block lg:block xl:block">
+                  {r.title}
+                </span>
+                {r.icon}
               </div>
             </div>
           );
@@ -64,16 +77,22 @@ const AppNav = () => {
         className="btn btn-outline w-full mt-3"
         onClick={() => navigate("/")}
       >
-        Go to website <Webhook />
+        <span className="hidden sm:hidden md:block lg:block xl:block">
+          Website
+        </span>{" "}
+        <Webhook />
       </div>
       {/* handle to logout  */}
       <div
         className="btn btn-outline w-full mt-3"
         onClick={() => {
-          toast.success("Successfully logged out!");
+          logout(user.id);
         }}
       >
-        Logout <LogOut />
+        <span className="hidden sm:hidden md:block lg:block xl:block">
+          Logout
+        </span>{" "}
+        <LogOut />
       </div>
     </div>
   );

@@ -4,11 +4,11 @@ const BlogCard = ({ blog, lang }) => {
   return (
     <>
       <div>
-        <div className="card lg:card-side w-full shadow-xl bg-base-100 ">
-          <figure className="min-w-56">
+        <div className="card lg:card-side shadow-xl bg-base-100 ">
+          <figure className="lg:w-1/3 xl:1/2 md:w-full sm:w-full">
             <img
               src={blog.waste_pic}
-              className="h-full w-full object-cover"
+              className="object-cover"
               alt="Blog Information"
             />
           </figure>
@@ -19,15 +19,7 @@ const BlogCard = ({ blog, lang }) => {
             ) : (
               <p>{blog.description}</p>
             )}
-            {/* <div className="card-actions justify-end">
-              <button
-                className="btn btn-primary "
-            
-              >
-                {" "}
-                <Languages />
-              </button>
-            </div> */}
+           
           </div>
         </div>
       </div>

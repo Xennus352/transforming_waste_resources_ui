@@ -36,6 +36,7 @@ const Navbar = () => {
       icon: <Building2 />,
     },
   ];
+
   return (
     <div
       className={`${
@@ -45,11 +46,17 @@ const Navbar = () => {
       }`}
     >
       <div>
-        <div className=" text-center text-white font-bold p-3">
-          <ReactTypingEffect
-            className="text-4xl"
-            text={["Transforming Waste Into Resources"]}
-          />
+        <div className="  text-white font-bold flex items-center gap-3 justify-center p-3">
+          <div className="avatar">
+            <div className="w-20 rounded-full">
+              <img
+                src="/src/assets/logo.jpg"
+                className="avatar"
+                alt="logo"
+              />
+            </div>
+          </div>
+          <ReactTypingEffect className="text-4xl" text={["Revelation "]} />
         </div>
         <div className="bg-[url('assets/menu-bg.png')] bg-cover p-3">
           <ul className=" flex items-center justify-evenly ">

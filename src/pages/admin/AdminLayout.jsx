@@ -10,12 +10,12 @@ const AdminLayout = () => {
   return (
     <div>
       <div className="grid grid-cols-12 h-screen w-full">
-        <div className=" col-span-3 border-r-2 p-2 sticky top-0">
+        <div className=" col-span-2 border-r-2 p-2 sticky top-0">
           <AdminLeftSide user={user} />
         </div>
 
         {/* data from nested routes  */}
-        <div className="col-span-9 p-2">
+        <div className="col-span-10 p-2">
           <Outlet />
         </div>
       </div>

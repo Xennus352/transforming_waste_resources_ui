@@ -3,6 +3,8 @@ import {
   createUserPost,
   getCurrentUser,
   getUserPost,
+  getUserSavePost,
+  saveUserPost,
 } from "../apis/user/currentUser";
 
 // to get current user
@@ -10,6 +12,7 @@ export const useGetCurrentUser = () => {
   return useQuery({
     queryKey: ["get-current-user-data"],
     queryFn: getCurrentUser,
+ 
   });
 };
 
@@ -26,7 +29,6 @@ export const useCreateUserPost = () => {
 };
 
 // get user post
-
 export const useGetUserPost = () => {
   return useQuery({
     queryKey: ["user-create-post"],
@@ -34,3 +36,25 @@ export const useGetUserPost = () => {
     refetchInterval: 10000,
   });
 };
+
+
+// get save post 
+export const useGetUserSavePost = () => {
+  return useQuery({
+    queryKey: ["user-save-post"],
+    queryFn: getUserSavePost,
+    // refetchInterval: 10000,
+  });
+};
+
+// save user post 
+export const useSaveUserPost = () => { 
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (id) => saveUserPost({id}),
+    onSuccess: () => {
+      // Invalidate and refetch
+      queryClient.invalidateQueries(["user-save-post"]);
+    },
+  });
+ }

@@ -49,12 +49,10 @@
 
 // export default Carousel;
 
-
-
-  // AUTO MOVE CAROUSEL
+// AUTO MOVE CAROUSEL
 
 import React, { useEffect, useState } from "react";
-import c2 from "../assets/biogas5.jpg"; 
+import c2 from "../assets/biogas5.jpg";
 
 const Carousel = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -62,7 +60,7 @@ const Carousel = () => {
 
   // Array of images for the carousel
   const images = [
-    c2,
+    "https://img.daisyui.com/images/stock/photo-1625726411847-8cbb60cc71e6.webp",
     "https://img.daisyui.com/images/stock/photo-1609621838510-5ad474b7d25d.webp",
     "https://img.daisyui.com/images/stock/photo-1414694762283-acccc27bca85.webp",
     "https://img.daisyui.com/images/stock/photo-1665553365602-b2fb8e5d1707.webp",
@@ -89,9 +87,15 @@ const Carousel = () => {
             className={`carousel-item w-full transition-opacity duration-500 ${
               currentIndex === index ? "opacity-100" : "opacity-0"
             }`}
-            style={{ position: currentIndex === index ? "relative" : "absolute" }}
+            style={{
+              position: currentIndex === index ? "relative" : "absolute",
+            }}
           >
-            <img src={image} className="w-full" alt={`Carousel Item ${index + 1}`} />
+            <img
+              src={image}
+              className="w-full"
+              alt={`Carousel Item ${index + 1}`}
+            />
           </div>
         ))}
       </div>
@@ -99,7 +103,9 @@ const Carousel = () => {
         {images.map((_, index) => (
           <button
             key={index}
-            className={`btn btn-xs ${currentIndex === index ? "btn-active" : ""}`}
+            className={`btn btn-xs ${
+              currentIndex === index ? "btn-active" : ""
+            }`}
             onClick={() => handleDotClick(index)}
           >
             {index + 1}

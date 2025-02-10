@@ -2,6 +2,7 @@ import axios from "axios";
 import { closeModal } from "../../utils/modal";
 import toast from "react-hot-toast";
 
+
 export const login = async (data) => {
   try {
     // api url
@@ -40,5 +41,37 @@ export const register = async (data) => {
     }
   } catch (error) {
     console.log(error);
+  }
+};
+
+export const logout = async (userId) => {
+
+  try {
+    // api url
+    const URL = "http://localhost:8000/api/auth/logout.php";
+    const sessionToken = localStorage.getItem("session_token");
+
+
+    const response = await axios.post(URL, userId,  {
+      headers: {
+        Authorization: sessionToken, // Include session token for authentication
+      },
+    });
+    if (response.data.success) {
+      toast.success("User successfully log out.");
+      console.log("Success:", response.data.message); // Logs: User successfully login.
+      localStorage.removeItem("session_token"); //token
+      localStorage.removeItem("tokenExpiration"); //exp time
+      console.log("Log out successful.");
+   
+     window.location.reload()
+      
+    } else {
+      toast.error("User login failed!");
+      console.log("Failed:", response.data.message); // Handle failure
+    }
+  } catch (error) {
+    console.log(error);
+    throw error;
   }
 };

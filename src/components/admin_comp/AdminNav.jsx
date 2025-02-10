@@ -1,16 +1,27 @@
 import React from "react";
-import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
-import { BookCopy,  House, LetterText, LogOut, Rss, Settings, Store, Webhook } from "lucide-react";
+import {
+  BookCopy,
+  House,
+  LetterText,
+  LogOut,
+  Rss,
+  Settings,
+  Store,
+  Webhook,
+} from "lucide-react";
+import { useLogout } from "../../react-query/auth";
 
-const AdminNav = () => {
+const AdminNav = ({ user }) => {
   const navigate = useNavigate();
+
+  const { mutate: logout } = useLogout();
 
   // routes
   const routes = [
     {
       path: "feed",
-      title: "Home Feed",
+      title: "Feed",
       icon: <House />,
     },
     {
@@ -26,13 +37,13 @@ const AdminNav = () => {
 
     {
       path: "hand-made-guide",
-      title: "Hand Made Guide",
+      title: "Handmade ",
       icon: <BookCopy />,
     },
     {
       path: "feedback",
       title: "Feedback",
-      icon: <LetterText />
+      icon: <LetterText />,
     },
     {
       path: "setting",
@@ -51,9 +62,14 @@ const AdminNav = () => {
             <div key={index}>
               <div
                 className="btn btn-outline w-full mt-3"
-                onClick={() => navigate(`/dashboard/${r.path}`, { replace: true })}
+                onClick={() =>
+                  navigate(`/dashboard/${r.path}`, { replace: true })
+                }
               >
-                {r.title} {r.icon}
+                <span className="hidden sm:hidden md:block lg:block xl:block">
+                  {r.title}
+                </span>
+                {r.icon}
               </div>
             </div>
           );
@@ -64,16 +80,22 @@ const AdminNav = () => {
         className="btn btn-outline w-full mt-3"
         onClick={() => navigate("/")}
       >
-        Go to website <Webhook />
+        <span className="hidden sm:hidden md:block lg:block xl:block">
+          Wbsite
+        </span>
+        <Webhook />
       </div>
       {/* handle to logout  */}
       <div
         className="btn btn-outline w-full mt-3"
         onClick={() => {
-          toast.success("Successfully logged out!");
+          logout(user.id);
         }}
       >
-        Logout <LogOut />
+        <span className="hidden sm:hidden md:block lg:block xl:block">
+          Logout
+        </span>{" "}
+        <LogOut />
       </div>
     </div>
   );

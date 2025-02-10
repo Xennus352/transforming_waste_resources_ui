@@ -2,6 +2,7 @@ import React from "react";
 import { Link, useLocation, useMatch } from "react-router-dom";
 import ModalBtn from "./modal/ModalBtn";
 import { useGetCurrentUser } from "../react-query/user";
+import { useLogout } from "../react-query/auth";
 
 const Footer = () => {
   const { pathname } = useLocation();
@@ -10,6 +11,8 @@ const Footer = () => {
 
   // get current user
   const { data: user, isLoading } = useGetCurrentUser();
+
+  const { mutate: logout} = useLogout()
 
   const scrollToTop = () => {
     window.scrollTo({
@@ -24,39 +27,31 @@ const Footer = () => {
         pathname == "/hero" || isAppRoute || isAdminRoute ? "hidden" : "block"
       }`}
     >
-      <footer className="footer footer-center bg-base-200 text-base-content rounded p-10">
+      <footer className="footer footer-center bg-[#BE8D67] text-base-content rounded  p-10 bg-[url('./assets/overlay-top.png')] bg-center bg-cover">
         <nav className="grid grid-flow-col gap-4">
-          <Link
-            to="/"
-            className="btn btn-accent btn-outline"
-            onClick={scrollToTop}
-          >
+          <Link to="/" className="btn btn-accent " onClick={scrollToTop}>
             Home
           </Link>
-          <Link
-            to="/about"
-            className="btn btn-accent btn-outline"
-            onClick={scrollToTop}
-          >
+          <Link to="/about" className="btn btn-accent " onClick={scrollToTop}>
             About
           </Link>
           <Link
             to="/contact-us"
-            className="btn btn-accent btn-outline"
+            className="btn btn-accent "
             onClick={scrollToTop}
           >
             Contact
           </Link>
           <Link
             to="/organization"
-            className="btn btn-accent btn-outline"
+            className="btn btn-accent "
             onClick={scrollToTop}
           >
             Organization
           </Link>
 
           {user ? (
-            <div className="btn btn-accent btn-outline">Logout</div>
+            <div className="btn btn-accent " onClick={() => { logout(user.id) }}>Logout</div>
           ) : (
             // <ModalBtn id="login-form" btnName="Login" iconName="" />
 
@@ -104,7 +99,7 @@ const Footer = () => {
         <aside>
           <p>
             Copyright © {new Date().getFullYear()} - All right reserved by
-            Transforming Waste Into Resources
+            Revelation
           </p>
         </aside>
       </footer>

@@ -7,19 +7,19 @@ const AppLeftSight = ({ user }) => {
     <div className="sticky top-0">
       {/* user profile */}
 
-      <div>
+      <div className="  border-b-4 rounded-sm  border-teal-200">
         <div className="avatar w-full select-none">
           <div className="w-24 rounded-full mx-auto my-0">
             <img src={ProfilePic} alt="Profile"/>
           </div>
         </div>
-        <p className="text-center border-b-4 rounded-sm uppercase tracking-widest border-teal-200">
+        <p className={`hidden sm:hidden md:block lg:block xl:block text-center uppercase tracking-widest `}>
           {user?.username}
         </p>
       </div>
       {/* side nav for app  */}
       <div className="mt-2 ">
-        <AppNav />
+        <AppNav user={user}/>
       </div>
     </div>
   );
