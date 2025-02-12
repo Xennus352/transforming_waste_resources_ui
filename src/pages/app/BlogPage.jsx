@@ -9,16 +9,48 @@ const BlogPage = () => {
 
   const [lang, setLang] = useState(false);
 
+  const wastType = [
+    { title: "most like" },
+    { title: "useful" },
+    { title: "water" },
+    { title: "air" },
+    { title: "ground" },
+    { title: "plastic" },
+  ];
+
   return (
     <div className="flex flex-col h-full">
       <div className="flex items-center justify-between">
-      <div className="text-xl">Information About The Recycle</div>
-        <button className="btn btn-primary " onClick={() => { setLang(!lang) }}>
+        <div className="text-xl w-full">
+          <input
+            type="text"
+            placeholder="Search here"
+            className="input input-bordered input-primary w-full  max-w-xl"
+          />
+        </div>
+        <button
+          className="btn btn-primary "
+          onClick={() => {
+            setLang(!lang);
+          }}
+        >
           {" "}
-          <Languages /> Translate
+          <Languages /> Search
         </button>
       </div>
-      <Divider/>
+
+      <div className="flex items-center justify-evenly flex-wrap mt-3 gap-3">
+        {" "}
+        {wastType.map((t, i) => {
+          return (
+            <div className="btn btn-outline" key={i}>
+              {t.title}
+            </div>
+          );
+        })}
+      </div>
+
+      <Divider />
 
       {/* cards  */}
       <div className="m-3 flex flex-col gap-4">

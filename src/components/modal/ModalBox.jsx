@@ -12,7 +12,7 @@ export const ModalBox = ({ title, id, children }) => {
             </button>
           </form>
           {/* Title  */}
-          <h3 className="font-bold text-lg m-2">{title}</h3>
+          <h3 className="font-bold text-xl text-white m-2">{title}</h3>
 
           <div className="">{children}</div>
         </div>

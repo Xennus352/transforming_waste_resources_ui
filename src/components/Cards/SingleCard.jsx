@@ -1,11 +1,14 @@
 import { BookMarked, Heart, MessageSquareCode } from "lucide-react";
 import React from "react";
-import { useSaveUserPost } from "../../react-query/user";
+import { useLikePost, useSaveUserPost } from "../../react-query/user";
 
 const SingleCard = ({ post }) => {
 
     // save post 
-    const {mutate: savePost} = useSaveUserPost()
+    const {mutate: savePost } = useSaveUserPost()
+
+    //like post
+    const {mutate: likePost} = useLikePost()
 
   return (
     <div className="">
@@ -22,9 +25,9 @@ const SingleCard = ({ post }) => {
           <h2 className="card-title">{post.title}</h2>
           <p>{post.content}</p>
           <div className="card-actions justify-end">
-            <button className="btn btn-primary">
+            <button className="btn btn-primary" onClick={() => { likePost(post.id) }}>
               {" "}
-              <Heart size={25} />{" "}
+              <Heart size={25}/>{" "}
             </button>
             <button className="btn btn-primary">
               {" "}

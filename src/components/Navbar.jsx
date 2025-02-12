@@ -46,15 +46,13 @@ const Navbar = () => {
       }`}
     >
       <div>
-        <div className="  text-white font-bold flex items-center gap-3 justify-center p-3">
-          <div className="avatar">
-            <div className="w-20 rounded-full">
-              <img
-                src="/src/assets/logo.jpg"
-                className="avatar"
-                alt="logo"
-              />
-            </div>
+        <div className=" font-bold flex items-center gap-3 justify-center p-3">
+          <div className="flex justify-center items-center">
+            <img
+              src="/src/assets/titleLogo.png"
+              className="object-contain text-black h-10" 
+              alt="Company Logo"
+            />
           </div>
           <ReactTypingEffect className="text-4xl" text={["Revelation "]} />
         </div>

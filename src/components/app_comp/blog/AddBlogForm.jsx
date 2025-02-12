@@ -11,7 +11,7 @@ const AddBlogForm = () => {
   const {
     register,
     handleSubmit,
-    setValue, // ✅ To manually set form values
+    setValue, //To manually set form values
     formState: { errors },
   } = useForm();
 
@@ -26,7 +26,7 @@ const AddBlogForm = () => {
       reader.onload = () => {
         if (typeof reader.result === "string") {
           setBase64(reader.result);
-          setValue("image", reader.result); // ✅ Update react-hook-form
+          setValue("image", reader.result); // Update react-hook-form
         }
       };
       reader.onerror = () => {
@@ -40,7 +40,7 @@ const AddBlogForm = () => {
       setError("Please upload an image.");
       return;
     }
-    data.picture = base64; // ✅ Ensure base64 is sent in form data
+    data.picture = base64; //Ensure base64 is sent in form data
     userCreatePost(data);
   };
 
@@ -51,7 +51,7 @@ const AddBlogForm = () => {
         onSubmit={handleSubmit(onSubmit)}
       >
         <label htmlFor="title">
-          Title
+         <p className="text-xl text-white">Title</p>
           <input
             {...register("title", { required: true })}
             type="text"
@@ -61,7 +61,7 @@ const AddBlogForm = () => {
         </label>
         <label className="form-control w-full max-w-xs">
           <div className="label">
-            <span className="label-text">Description</span>
+            <span className="label-text text-xl text-white">Description</span>
           </div>
           <textarea
             {...register("description", { required: true })}
@@ -71,8 +71,8 @@ const AddBlogForm = () => {
 
         <label htmlFor="photo">
           <input type="hidden" {...register("picture")} />{" "}
-          {/* ✅ Hidden input for base64 */}
-          <div className="p-3 m-2 cursor-pointer border border-primary hover:rounded-md bg-base-200 w-full hover:text-slate-400 transition-all duration-100 flex items-center gap-3 justify-between">
+          {/* Hidden input for base64 */}
+          <div className="p-3 m-2 cursor-pointer border border-primary hover:rounded-md bg-base-200 w-full hover:text-slate-600 transition-all duration-100 flex items-center gap-3 justify-between">
             <input
               type="file"
               accept="image/*"

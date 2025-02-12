@@ -5,7 +5,7 @@ import {
   House,
   LetterText,
   LogOut,
-  Rss,
+  ScanSearch,
   Settings,
   Store,
   Webhook,
@@ -26,8 +26,8 @@ const AdminNav = ({ user }) => {
     },
     {
       path: "blog",
-      title: "Blog",
-      icon: <Rss />,
+      title: "Search",
+      icon: <ScanSearch />,
     },
     {
       path: "market",
@@ -47,7 +47,7 @@ const AdminNav = ({ user }) => {
     },
     {
       path: "setting",
-      title: "Setting",
+      title: "Profile",
       icon: <Settings />,
     },
   ];
