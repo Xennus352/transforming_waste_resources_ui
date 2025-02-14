@@ -1,8 +1,11 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
+  commentPost,
   createUserPost,
   deleteUserSavePost,
+  getCommentPost,
   getCurrentUser,
+  getLike,
   getUserPost,
   getUserSavePost,
   likeUserPost,
@@ -38,7 +41,7 @@ export const useGetUserPost = () => {
     refetchInterval: 10000,
     staleTime: 5000,
     refetchIntervalInBackground: 10000,
-    notifyOnChangeProps: ['data']
+    notifyOnChangeProps: ["data"],
   });
 };
 
@@ -77,6 +80,18 @@ export const useDeleteUserSavePost = () => {
   });
 };
 
+//get like
+export const useGetLike = () => {
+  return useQuery({
+    queryKey: ["get-like"],
+    queryFn: () => getLike(),
+    refetchInterval: 10000,
+    staleTime: 5000,
+    // refetchIntervalInBackground: 10000,
+    // notifyOnChangeProps: ["data"],
+  });
+};
+
 // like user post
 export const useLikePost = () => {
   const queryClient = useQueryClient();
@@ -85,7 +100,31 @@ export const useLikePost = () => {
     mutationFn: (id) => likeUserPost({ id }),
     onSuccess: () => {
       // Invalidate and refetch
-      // queryClient.invalidateQueries(["user-like-post"]);
+      queryClient.invalidateQueries(["get-like"]);
+    },
+  });
+};
+
+// get comments
+export const useGetComment = () => {
+  return useQuery({
+    queryKey: ["user-comment"],
+    queryFn: () => getCommentPost(),
+    refetchInterval: 10000,
+    staleTime: 5000,
+    // refetchIntervalInBackground: 10000,
+    // notifyOnChangeProps: ["data"],
+  });
+};
+
+// comment post
+export const useCommentPost = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (data) => commentPost(data),
+    onSuccess: () => {
+      // Invalidate and refetch
+      queryClient.invalidateQueries(["user-comment"]);
     },
   });
 };

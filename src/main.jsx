@@ -7,6 +7,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import ModalContainer from "./components/modal/ModalContainer.jsx";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { NotificationProvider } from "./context/NotificationContext.jsx";
+import { CommentProvider } from "./context/CommentContext.jsx";
 
 const queryClient = new QueryClient();
 
@@ -15,9 +16,11 @@ createRoot(document.getElementById("root")).render(
     <BrowserRouter>
       <QueryClientProvider client={queryClient}>
         <NotificationProvider>
-          <App />
-          <ModalContainer />
-          <ReactQueryDevtools initialIsOpen={false} />
+          <CommentProvider>
+            <App />
+            <ModalContainer />
+            <ReactQueryDevtools initialIsOpen={false} />
+          </CommentProvider>
         </NotificationProvider>
       </QueryClientProvider>
     </BrowserRouter>

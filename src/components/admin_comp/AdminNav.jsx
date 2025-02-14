@@ -17,6 +17,9 @@ const AdminNav = ({ user }) => {
 
   const { mutate: logout } = useLogout();
 
+  const path = location.pathname; 
+  const lastSegment = path.split('/').pop(); 
+
   // routes
   const routes = [
     {
@@ -61,7 +64,9 @@ const AdminNav = ({ user }) => {
           return (
             <div key={index}>
               <div
-                className="btn btn-outline w-full mt-3"
+                className={`btn btn-outline w-full mt-3  ${
+                  lastSegment == r.path ? "bg-primary" : ""
+                } `}
                 onClick={() =>
                   navigate(`/dashboard/${r.path}`, { replace: true })
                 }

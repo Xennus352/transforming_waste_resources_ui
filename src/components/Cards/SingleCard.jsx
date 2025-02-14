@@ -1,39 +1,68 @@
 import { BookMarked, Heart, MessageSquareCode } from "lucide-react";
 import React from "react";
-import { useLikePost, useSaveUserPost } from "../../react-query/user";
+import {
+  useGetLike,
+  useLikePost,
+  useSaveUserPost,
+} from "../../react-query/user";
+import { modal } from "../../utils/modal";
+import { useComment } from "../../context/CommentContext";
 
-const SingleCard = ({ post }) => {
+const SingleCard = ({ post, lang }) => {
+  // context for comment
+  const { setCurrentPostId } = useComment();
+  // save post
+  const { mutate: savePost } = useSaveUserPost();
 
-    // save post 
-    const {mutate: savePost } = useSaveUserPost()
+  //like post
+  const { mutate: likePost } = useLikePost();
 
-    //like post
-    const {mutate: likePost} = useLikePost()
 
   return (
     <div className="">
       <div className="card lg:card-side shadow-xl bg-base-100 ">
         <figure className="lg:w-1/3 xl:1/2 md:w-full sm:w-full">
-          <img
-            src={post.picture}
-            
-            className="object-cover"
-            alt="post pic"
-          />
+          <img src={post.picture} className="object-cover" alt="post pic" />
         </figure>
-        <div className="card-body">
+        <div className="card-body lg:w-2/5 xl:w-2/5">
           <h2 className="card-title">{post.title}</h2>
-          <p>{post.content}</p>
+        <div className="">
+        {lang ? (
+            <p>{post.content}</p>
+          ) : (
+            <p>
+              {post.contentInBurmese ? post.contentInBurmese : "Not add in db"}
+            </p>
+          )}
+        </div>
+
           <div className="card-actions justify-end">
-            <button className="btn btn-primary" onClick={() => { likePost(post.id) }}>
+            <button
+              className="btn btn-primary"
+              onClick={() => {
+                likePost(post.id);
+              }}
+            >
               {" "}
-              <Heart size={25}/>{" "}
+              <Heart size={25} />
+             
             </button>
-            <button className="btn btn-primary">
+            <button
+              className="btn btn-primary"
+              onClick={() => {
+                modal("comment");
+                setCurrentPostId(post.id);
+              }}
+            >
               {" "}
               <MessageSquareCode size={25} />{" "}
             </button>
-            <button className="btn btn-primary" onClick={() => { savePost(post.id) }}>
+            <button
+              className="btn btn-primary"
+              onClick={() => {
+                savePost(post.id);
+              }}
+            >
               {" "}
               <BookMarked size={25} />{" "}
             </button>

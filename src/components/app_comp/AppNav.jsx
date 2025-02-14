@@ -12,54 +12,87 @@ import {
 } from "lucide-react";
 import { useLogout } from "../../react-query/auth";
 import { useGetUserPost } from "../../react-query/user";
+import { io } from "socket.io-client";
 
+const socket = io("http://localhost:5000");
 const AppNav = ({ user }) => {
   const navigate = useNavigate();
   const location = useLocation();
 
   const { mutate: logout } = useLogout();
-  const { data: posts } = useGetUserPost();
+  // const { data: posts } = useGetUserPost();
 
   const [newPostCount, setNewPostCount] = useState(0);
 
-
-
-  // Sort posts by created_at in descending order
-
-    const sortedPosts =
-      posts &&
-      posts
-        .sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
-        .slice(0, 1);
-
-
-
-  // Sort posts by date and get the latest
-  const latestPosts = posts
-    ? posts.filter((a) => new Date(a.created_at) > new Date(sortedPosts.created_at))
-    : [];
+  const [notifications, setNotifications] = useState([]);
 
   useEffect(() => {
-    if (posts && location.pathname !== "/app/feed") {
-      const currentPostCount = posts.length;
-      console.log("latest", latestPosts.length);
-      console.log("Current post count:", currentPostCount);
+    socket.on("newPostNotification", (post) => {
+      setNotifications((prev) => [...prev, `New post: ${post.title}`]);
+    });
 
-      // Check if there are new posts
-      if (newPostCount < currentPostCount) {
-        // Increment new post count by the number of new posts
-        setNewPostCount(latestPosts.length);
-      }
-    }
-  }, [posts, latestPosts.length, newPostCount]);
+    socket.on("updatePostCount", (count) => {
+      setNewPostCount(count);
+    });
+
+    return () => {
+      socket.off("newPostNotification");
+      socket.off("updatePostCount");
+    };
+  }, []);
+
+  // 21 > new = 23
+
+  //item 20 last 23
+
+  //   // Sort posts by created_at in descending order
+  //   const temp = []
+
+  //   const sortedPosts =
+  //   posts &&
+  //   posts
+  //     .sort((a, b) => b.id - a.id)
+  //     .slice(0,1);
+
+  // console.log('from db new', sortedPosts);
+
+  // // Sort posts by date and get the latest
+  // const latestPosts = posts && sortedPosts.length > 0
+  //   ? posts.sort((a) => a.id > sortedPosts[0].id)
+  //   : [];
+
+  //   let test  = sortedPosts && sortedPosts[0].id > latestPosts
+  //   temp.push(test)
+  //   console.log('temp',temp)
+
+  // console.log('from db old', latestPosts);
+
+  //   useEffect(() => {
+  //     if (posts && location.pathname !== "/app/feed") {
+  //       const currentPostCount = posts.length;
+  //       console.log("latest", sortedPosts?.length);
+  //       console.log("Current post count:", currentPostCount);
+
+  //       // Check if there are new posts
+  //       if (newPostCount < currentPostCount) {
+  //         // Increment new post count by the number of new posts
+  //         setNewPostCount(sortedPosts?.length);
+  //       }
+  //     }
+  //   }, [posts, sortedPosts?.length, newPostCount]);
 
   useEffect(() => {
     // Reset new post count when the user navigates to the posts page
     if (location.pathname === "/app/feed") {
-      setNewPostCount(0); // Reset to 0 when viewing the feed
+    setNewPostCount(0); // Reset to 0 when viewing the feed
       console.log("Reset post count to 0", newPostCount);
     }
-  }, [location.pathname]);
+  }, [location.pathname, newPostCount]);
+
+
+  const path = location.pathname; 
+  const lastSegment = path.split('/').pop(); 
+
   // routes
   const routes = [
     {
@@ -105,10 +138,10 @@ const AppNav = ({ user }) => {
               key={index}
               className={`${
                 r.path === "feed" && newPostCount ? "animate-bounce" : ""
-              }`}
+              } `}
             >
               <div
-                className="btn btn-outline w-full mt-3"
+                className={`btn btn-outline w-full mt-3 relative  ${lastSegment == r.path ? "bg-primary" : "" } `}
                 onClick={() => navigate(`/app/${r.path}`, { replace: true })}
               >
                 <span className="hidden sm:hidden md:block lg:block xl:block">
@@ -116,7 +149,10 @@ const AppNav = ({ user }) => {
                 </span>
                 {r.icon}
                 {r.path === "feed" && newPostCount > 0 && (
-                  <span>New: {newPostCount}</span>
+                  <div className="badge badge-secondary">
+                    {newPostCount}
+                   
+                  </div>
                 )}
               </div>
             </div>
@@ -150,3 +186,6 @@ const AppNav = ({ user }) => {
 };
 
 export default AppNav;
+
+
+

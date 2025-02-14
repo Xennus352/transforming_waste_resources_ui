@@ -2,9 +2,8 @@ import React, { useEffect, useState } from "react";
 import Divider from "../../components/Divider";
 import { modal } from "../../utils/modal";
 import SingleCard from "../../components/Cards/SingleCard";
-import { useGetUserPost } from "../../react-query/user";
+import { useGetLike, useGetUserPost } from "../../react-query/user";
 import { Languages } from "lucide-react";
-
 
 const AppFeed = () => {
   const [lang, setLang] = useState(false);
@@ -12,7 +11,34 @@ const AppFeed = () => {
   // get post
   const { data: posts = [], isLoading, isError } = useGetUserPost();
 
+  // get like
+  const { data: totalLike } = useGetLike();
 
+  // Effect to set initial language from localStorage
+  useEffect(() => {
+    const currentLang = localStorage.getItem("Language");
+    if (currentLang === "myanmar") {
+      setLang(false); // Assuming true means Myanmar
+    } else {
+      setLang(true); // Assuming false means English
+    }
+  }, []);
+
+  // Function to toggle language
+  const toggleLanguage = () => {
+    // Get the current language from localStorage
+    const currentLang = localStorage.getItem("Language");
+
+    // Toggle the language
+    if (currentLang === "myanmar") {
+      localStorage.setItem("Language", "english"); // Set to English
+      setLang(true); // Update state to English
+    } else {
+      localStorage.setItem("Language", "myanmar"); // Set to Myanmar
+      setLang(false); // Update state to Myanmar
+    }
+  };
+  console.log(totalLike);
 
   return (
     <div>
@@ -22,6 +48,7 @@ const AppFeed = () => {
           className="btn btn-primary "
           onClick={() => {
             setLang(!lang);
+            toggleLanguage();
           }}
         >
           {" "}
@@ -57,9 +84,9 @@ const AppFeed = () => {
         {posts &&
           posts?.map((post, index) => {
             return (
-              <div key={index} className="flex flex-col-reverse">
-                {" "}
-                <SingleCard post={post} />
+              <div key={index} className="flex flex-col">
+                {/* only show when admin is approve  */}
+                {post.isApprove == 0 && <SingleCard post={post} lang={lang} />}
               </div>
             );
           })}

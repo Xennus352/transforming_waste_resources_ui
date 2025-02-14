@@ -61,8 +61,9 @@ export const createUserPost = async (data) => {
       toast.success("Successfully Created!");
       console.log("Success:", response.data.message);
     } else {
-      toast.error("Fail to Create!");
-      console.log("Failed:", response.data.message); // Handle failure
+      //one kind of error
+      toast.success("Waiting response to Create!");
+      console.log("Pending:", "Waiting Response"); // Handle failure
     }
   } catch (error) {
     toast.error(error);
@@ -149,11 +150,10 @@ export const getUserSavePost = async () => {
     });
     // Handle the response from the server
     if (response.data) {
-      return response.data.data || []; 
+      return response.data.data || [];
     } else {
       console.log("Failed:", response.data.message); // Handle failure
       throw new Error(response.data.message);
-
     }
   } catch (error) {
     console.log("Error during request:", error);
@@ -195,44 +195,151 @@ export const deleteUserSavePost = async (id) => {
   } catch (error) {
     console.error("Error during request:", error);
     toast.error("An error occurred. Please try again later.");
-    throw new Error(error) ;
+    throw new Error(error);
+  }
+};
+
+// get like 
+export const getLike = async () => {
+  // php api for feedback
+  const URL = "http://localhost:8000/api/userPost/get_like.php";
+  try {
+    // Get the session token from localStorage
+    const sessionToken = localStorage.getItem("session_token");
+
+    // If no session token exists, notify the user and return early
+    if (!sessionToken) {
+      console.log("Session expired. Please log in again.");
+      throw new Error("Session expired. Please log in again."); // Throw an error to indicate the issue
+    }
+
+    // Include the session token in the Authorization header
+    const response = await axios.get(URL, {
+      headers: {
+        Authorization: sessionToken, // the token
+      },
+    });
+    // Handle the response from the server
+    if (response.data) {
+      console.log(response.data.message)
+      return response.data.data || [];
+    } else {
+      console.log("Failed:", response.data.message); // Handle failure
+      throw new Error(response.data.message);
+    }
+  } catch (error) {
+    console.log("Error during request:", error);
+    throw error;
+  }
+}
+
+// like to post
+export const likeUserPost = async (id) => {
+  // php api for feedback
+  const URL = "http://localhost:8000/api/userPost/like_user.php";
+  try {
+    // Get the session token from localStorage
+    const sessionToken = localStorage.getItem("session_token");
+
+    // If no session token exists, notify the user and return early
+    if (!sessionToken) {
+      toast.error("Session expired. Please log in again.");
+      modal("login-form");
+      return;
+    }
+
+    // Include the session token in the Authorization header
+    const response = await axios.post(URL, id, {
+      headers: {
+        Authorization: sessionToken, // Include session token for authentication
+      },
+    });
+
+    // Handle the response from the server
+    if (response.data.success) {
+      toast.success("Liked!");
+      console.log("Success:", response.data.message);
+    } else {
+      toast.error("Fail!");
+      console.log("Failed:", response.data.message); // Handle failure
+    }
+  } catch (error) {
+    toast.error(error);
+    console.log("Error during request:", error);
+    throw error;
+  }
+};
+
+// comment to post
+export const commentPost = async (data) => {
+  // php api for feedback
+  const URL = "http://localhost:8000/api/userPost/sent_comment.php";
+  try {
+    // Get the session token from localStorage
+    const sessionToken = localStorage.getItem("session_token");
+
+    // If no session token exists, notify the user and return early
+    if (!sessionToken) {
+      toast.error("Session expired. Please log in again.");
+      modal("login-form");
+      return;
+    }
+
+    // Include the session token in the Authorization header
+    const response = await axios.post(URL, data, {
+      headers: {
+        Authorization: sessionToken, // Include session token for authentication
+      },
+    });
+
+    // Handle the response from the server
+    if (response.data.success) {
+      // toast.success("Successfully Saved!");
+      console.log("Success:", response.data.message);
+    } else {
+      toast.error("Fail to comment that post!");
+      console.log("Failed:", response.data.message); // Handle failure
+    }
+  } catch (error) {
+    toast.error(error);
+    console.log("Error during request:", error);
+    throw error;
+  }
+};
+
+// get comments
+export const getCommentPost = async () => {
+  // php api for feedback
+  const URL = "http://localhost:8000/api/userPost/get_comment.php";
+  try {
+    // Get the session token from localStorage
+    const sessionToken = localStorage.getItem("session_token");
+
+    // If no session token exists, notify the user and return early
+    if (!sessionToken) {
+      console.log("Session expired. Please log in again.");
+      // throw new Error("Session expired. Please log in again."); // Throw an error to indicate the issue
+      return null
+    }
+
+    // Include the session token in the Authorization header
+    const response = await axios.get(URL, {
+      headers: {
+        Authorization: sessionToken, // the token
+      },
+    });
+    // Handle the response from the server
+    if (response.data) {
+      console.log(response.data.message)
+      return response.data.data || [];
+    } else {
+      console.log("Failed:", response.data.message); // Handle failure
+      throw new Error(response.data.message);
+    }
+  } catch (error) {
+    console.log("Error during request:", error);
+    throw error;
   }
 };
 
 
-
-export const likeUserPost = async (id) => {
-   // php api for feedback
-   const URL = "http://localhost:8000/api/userPost/like_user.php";
-   try {
-     // Get the session token from localStorage
-     const sessionToken = localStorage.getItem("session_token");
- 
-     // If no session token exists, notify the user and return early
-     if (!sessionToken) {
-       toast.error("Session expired. Please log in again.");
-       modal("login-form");
-       return;
-     }
- 
-     // Include the session token in the Authorization header
-     const response = await axios.post(URL, id, {
-       headers: {
-         Authorization: sessionToken, // Include session token for authentication
-       },
-     });
- 
-     // Handle the response from the server
-     if (response.data.success) {
-       toast.success("Liked!");
-       console.log("Success:", response.data.message);
-     } else {
-       toast.error("Fail!");
-       console.log("Failed:", response.data.message); // Handle failure
-     }
-   } catch (error) {
-     toast.error(error);
-     console.log("Error during request:", error);
-     throw error;
-   }
-}
