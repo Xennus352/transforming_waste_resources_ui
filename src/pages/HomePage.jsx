@@ -2,7 +2,7 @@ import React from "react";
 import Carousel from "../components/Carousel";
 import Feedback from "../components/Feedback";
 import Divider from "../components/Divider";
-import AboutPage from "./AboutPage"
+import AboutCard from "../components/AboutCard";
 
 const HomePage = () => {
   return (
@@ -12,9 +12,8 @@ const HomePage = () => {
 
       {/* line effect  */}
       <Divider title="About" />
-      {/* About Page  */}
-      <AboutPage/>
-
+      {/* About   */}
+      <AboutCard />
 
       {/* line effect  */}
       <Divider title="Customer Feedback" />

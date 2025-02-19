@@ -199,7 +199,7 @@ export const deleteUserSavePost = async (id) => {
   }
 };
 
-// get like 
+// get like
 export const getLike = async () => {
   // php api for feedback
   const URL = "http://localhost:8000/api/userPost/get_like.php";
@@ -221,7 +221,7 @@ export const getLike = async () => {
     });
     // Handle the response from the server
     if (response.data) {
-      console.log(response.data.message)
+      console.log(response.data.message);
       return response.data.data || [];
     } else {
       console.log("Failed:", response.data.message); // Handle failure
@@ -231,7 +231,7 @@ export const getLike = async () => {
     console.log("Error during request:", error);
     throw error;
   }
-}
+};
 
 // like to post
 export const likeUserPost = async (id) => {
@@ -319,7 +319,7 @@ export const getCommentPost = async () => {
     if (!sessionToken) {
       console.log("Session expired. Please log in again.");
       // throw new Error("Session expired. Please log in again."); // Throw an error to indicate the issue
-      return null
+      return null;
     }
 
     // Include the session token in the Authorization header
@@ -330,7 +330,7 @@ export const getCommentPost = async () => {
     });
     // Handle the response from the server
     if (response.data) {
-      console.log(response.data.message)
+      console.log(response.data.message);
       return response.data.data || [];
     } else {
       console.log("Failed:", response.data.message); // Handle failure
@@ -342,4 +342,74 @@ export const getCommentPost = async () => {
   }
 };
 
+// get by most like
+export const getByMostLike = async () => {
+  // php api for feedback
+  const URL = "http://localhost:8000/api/userPost/get_by_most_like.php";
+  try {
+    // Get the session token from localStorage
+    const sessionToken = localStorage.getItem("session_token");
 
+    // If no session token exists, notify the user and return early
+    if (!sessionToken) {
+      console.log("Session expired. Please log in again.");
+      // throw new Error("Session expired. Please log in again."); // Throw an error to indicate the issue
+      return null;
+    }
+
+    // Include the session token in the Authorization header
+    const response = await axios.get(URL, {
+      headers: {
+        Authorization: sessionToken, // the token
+      },
+    });
+    // Handle the response from the server
+    if (response.data) {
+      console.log(response.data.message);
+      return response.data.data || [];
+    } else {
+      console.log("Failed:", response.data.message); // Handle failure
+      throw new Error(response.data.message);
+    }
+  } catch (error) {
+    console.log("Error during request:", error);
+    throw error;
+  }
+};
+
+// set useful
+export const makeUseful = async (id) => {
+  // php api for feedback
+  const URL = "http://localhost:8000/api/userPost/set_useful.php";
+  try {
+    // Get the session token from localStorage
+    const sessionToken = localStorage.getItem("session_token");
+
+    // If no session token exists, notify the user and return early
+    if (!sessionToken) {
+      toast.error("Session expired. Please log in again.");
+      modal("login-form");
+      return;
+    }
+
+    // Include the session token in the Authorization header
+    const response = await axios.post(URL, id, {
+      headers: {
+        Authorization: sessionToken, // Include session token for authentication
+      },
+    });
+
+    // Handle the response from the server
+    if (response.data.success) {
+      toast.success("Successfully Supported!");
+      console.log("Success:", response.data.message);
+    } else {
+      toast.error("Fail to Support!");
+      console.log("Failed:", response.data.message); // Handle failure
+    }
+  } catch (error) {
+    toast.error(error);
+    console.log("Error during request:", error);
+    throw error;
+  }
+};

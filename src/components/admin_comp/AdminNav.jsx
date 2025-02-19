@@ -22,15 +22,15 @@ const AdminNav = ({ user }) => {
 
   // routes
   const routes = [
-    {
-      path: "feed",
-      title: "Feed",
-      icon: <House />,
-    },
+    // {
+    //   path: "feed",
+    //   title: "Feed",
+    //   icon: <House />,
+    // },
     {
       path: "blog",
-      title: "Search",
-      icon: <ScanSearch />,
+      title: "Feed",
+      icon: <House />,
     },
     {
       path: "market",

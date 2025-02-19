@@ -5,18 +5,18 @@ import { motion } from "motion/react";
 
 const Hero = () => {
   return (
-    <div className="bg-[url('/home/xennus/Workspace/TransformingWasteIntoResources/client/src/assets/sustainable-waste-management.jpg')] bg-cover bg-center">
+    <div className="bg-[url('/src/assets/sustainable-waste-management.jpg')] bg-cover bg-center">
       <motion.div
         className="w-full h-screen flex flex-col items-center justify-center gap-2 "
         initial={{ opacity: 0, x: -60 }}
         animate={{
           opacity: 1,
-          x: 0, 
+          x:0, // Move to x: 0, then to x: -20, and back to x: 0
           transition: {
             delay: 0.5,
             type: "spring",
-            duration: 0.3, 
-            bounce: 0.4,
+            duration: 0.6, // Adjust duration for a longer animation
+            bounce:0.7,
           },
         }}
       >
@@ -32,9 +32,11 @@ const Hero = () => {
           </div>
           <div>
             <div className="flex justify-end">
-              <div className="btn text-white btn-outline">
+              <motion.button
+              whileHover={{rotate:'3deg', scale:1.05}}
+              className="btn text-white text-lg btn-outline">
                 <Link to="/">Let's Get Start..</Link>
-              </div>
+              </motion.button>
             </div>
           </div>
         </div>

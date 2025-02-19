@@ -50,14 +50,14 @@ const Navbar = () => {
           <div className="flex justify-center items-center">
             <img
               src="/src/assets/titleLogo.png"
-              className="object-contain text-black h-10" 
+              className="object-contain text-black h-10"
               alt="Company Logo"
             />
           </div>
           <ReactTypingEffect className="text-4xl" text={["Revelation "]} />
         </div>
         <div className="bg-[url('assets/menu-bg.png')] bg-cover p-3">
-          <ul className=" flex items-center justify-evenly ">
+          <ul className=" flex items-center justify-evenly flex-wrap">
             {routes.map((route, index) => {
               return (
                 <li key={index}>

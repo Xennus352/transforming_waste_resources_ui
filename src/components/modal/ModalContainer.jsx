@@ -34,6 +34,11 @@ const ModalContainer = () => {
 
       {/* for admin post blog modal  */}
       <ModalBox title={"Creating Blog"} id={"create-blog-form"}>
+        <AddBlogForm />
+      </ModalBox>
+
+      {/* for admin post handmade modal  */}
+      <ModalBox title={"Creating Blog"} id={"create-handmade-form"}>
         <AdminAddBlogForm />
       </ModalBox>
     </div>

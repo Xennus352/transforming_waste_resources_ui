@@ -50,14 +50,35 @@ const AddBlogForm = () => {
         className="flex flex-col items-center"
         onSubmit={handleSubmit(onSubmit)}
       >
-        <label htmlFor="title">
-         <p className="text-xl text-white">Title</p>
+        <label>
+          <p className="text-xl text-white">Title</p>
           <input
             {...register("title", { required: true })}
             type="text"
-            id="title"
             className="input input-bordered input-info w-full max-w-xs"
           />
+        </label>
+        <label>
+          <p className="text-xl text-white">Category</p>
+          <input
+            {...register("category", {
+              required: "This field is required",
+              validate: {
+                validCategory: (value) =>
+                  ["water", "air", "ground", "plastic", "other"].includes(
+                    value
+                  ) || "Invalid category",
+              },
+            })}
+            type="text"
+            placeholder="water, air, ground, plastic or other"
+            className="input input-bordered input-info w-full max-w-xs"
+          />
+          {errors.category && (
+            <p className="text-error bg-slate-200 rounded-lg p-2 m-1 text-center">
+              {errors.category.message}
+            </p>
+          )}
         </label>
         <label className="form-control w-full max-w-xs">
           <div className="label">
@@ -69,14 +90,13 @@ const AddBlogForm = () => {
           ></textarea>
         </label>
 
-        <label htmlFor="photo">
+        <label>
           <input type="hidden" {...register("picture")} />{" "}
           {/* Hidden input for base64 */}
           <div className="p-3 m-2 cursor-pointer border border-primary hover:rounded-md bg-base-200 w-full hover:text-slate-600 transition-all duration-100 flex items-center gap-3 justify-between">
             <input
               type="file"
               accept="image/*"
-              id="photo"
               className="hidden"
               onChange={handleFileChange}
             />

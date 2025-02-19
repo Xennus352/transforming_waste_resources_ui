@@ -22,7 +22,7 @@ const AppFeed = () => {
     } else {
       setLang(true); // Assuming false means English
     }
-  }, []);
+  }, [lang]);
 
   // Function to toggle language
   const toggleLanguage = () => {
@@ -38,7 +38,9 @@ const AppFeed = () => {
       setLang(false); // Update state to Myanmar
     }
   };
-  console.log(totalLike);
+
+  // descending posts
+  const final = posts.sort((a, b) => b.id - a.id);
 
   return (
     <div>
@@ -82,11 +84,23 @@ const AppFeed = () => {
           </div>
         )}
         {posts &&
-          posts?.map((post, index) => {
+          final?.map((post, index) => {
+            // Find the total likes for the current post
+            const postLikes = totalLike?.find(
+              (like) => like.post_id === post.id
+            );
+            const totalLikesCount = postLikes ? postLikes.total_like_count : 0; // Assuming 'count' holds the number of likes
+
             return (
               <div key={index} className="flex flex-col">
                 {/* only show when admin is approve  */}
-                {post.isApprove == 0 && <SingleCard post={post} lang={lang} />}
+                {post.isApprove == 1 && (
+                  <SingleCard
+                    post={post}
+                    lang={lang}
+                    totalLikes={totalLikesCount}
+                  />
+                )}
               </div>
             );
           })}

@@ -3,12 +3,14 @@ import {
   commentPost,
   createUserPost,
   deleteUserSavePost,
+  getByMostLike,
   getCommentPost,
   getCurrentUser,
   getLike,
   getUserPost,
   getUserSavePost,
   likeUserPost,
+  makeUseful,
   saveUserPost,
 } from "../apis/user/currentUser";
 
@@ -92,6 +94,18 @@ export const useGetLike = () => {
   });
 };
 
+// get like by most like
+export const useGetLikeByTotalCount = () => {
+  return useQuery({
+    queryKey: ["get-by-most-like"],
+    queryFn: () => getByMostLike(),
+    refetchInterval: 10000,
+    staleTime: 5000,
+    // refetchIntervalInBackground: 10000,
+    // notifyOnChangeProps: ["data"],
+  });
+};
+
 // like user post
 export const useLikePost = () => {
   const queryClient = useQueryClient();
@@ -125,6 +139,18 @@ export const useCommentPost = () => {
     onSuccess: () => {
       // Invalidate and refetch
       queryClient.invalidateQueries(["user-comment"]);
+    },
+  });
+};
+
+// make useful post
+export const useMakeUsefulPost = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (id) => makeUseful({id}),
+    onSuccess: () => {
+      // Invalidate and refetch
+      queryClient.invalidateQueries(["user-create-post"]);
     },
   });
 };

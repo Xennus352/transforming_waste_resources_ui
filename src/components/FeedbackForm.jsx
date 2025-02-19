@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import { feedbackPost } from "../apis/feedback/feedback_control";
 import { Send } from "lucide-react";
 import { useCreateFeedback } from "../react-query/feedback";
+import { motion } from "motion/react";
 
 const FeedbackForm = () => {
   // handle form inputs using react hook form
@@ -17,7 +18,14 @@ const FeedbackForm = () => {
   // send data
   const onSubmit = (data) => createFeedback(data);
   return (
-    <div>
+    <motion.div
+      initial={{ opacity: 0, scale: 0 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{
+        duration: 0.4,
+        scale: { type: "spring", visualDuration: 0.4, bounce: 0.5 },
+      }}
+    >
       {/* greeting text */}
       <div className="p-2">
         <h2 className="text-center font-bold">Send Us A Message</h2>
@@ -80,7 +88,7 @@ const FeedbackForm = () => {
           </button>
         </form>
       </div>
-    </div>
+    </motion.div>
   );
 };
 

@@ -1,22 +1,11 @@
 import React from "react";
-import {
-  useApprovePost,
-  useDeleteBlog,
-  useGetBlog,
-} from "../../react-query/admin/admin";
-import { useGetUserPost } from "../../react-query/user";
+import { useDeleteHand, useGetBlog } from "../../react-query/admin/admin";
 
-const Table = () => {
-  const { data: blog } = useGetBlog();
-
-  // get all user post
-  const { data: userPosts, isLoading } = useGetUserPost();
+const HandTable = () => {
+  const { data: blog, isLoading } = useGetBlog();
 
   //delete posts
-  const { mutate: adminDeleteBlog } = useDeleteBlog();
-
-  // approve post
-  const { mutate: approve } = useApprovePost();
+  const { mutate: adminDeleteHand } = useDeleteHand();
 
   return (
     <div>
@@ -40,37 +29,28 @@ const Table = () => {
             )}
             {/* row  */}
 
-            {userPosts &&
-              userPosts.map((blog, index) => {
+            {blog &&
+              blog.map((blog, index) => {
                 return (
                   <tr key={index} className="hover hover:cursor-pointer ">
                     <th>{index + 1}</th>
                     <td>{blog.title}</td>
-                    <td>{blog.content}</td>
-                    <td className=" col-span-1">{blog.contentInBurmese}</td>
+                    <td>{blog.description}</td>
+                    <td className=" col-span-1">{blog.description_burmese}</td>
                     <td></td>
                     <td className="p-0">
                       <img
-                        src={blog.picture}
-                        className=" w-2/4 h-1/4 object-cover"
+                        src={blog.waste_pic}
+                        className=" h-3/4 object-cover"
                         alt="picture"
                       />
                     </td>
                     <td className="flex flex-col gap-2 items-center h-full  my-6">
-                      <button
-                        className="btn btn-outline btn-primary disabled:bg-success disabled:cursor-not-allowed"
-                        disabled={blog.isApprove == 1}
-                        onClick={() => {
-                          approve(blog.id);
-                        }}
-                      >
-                        Approve
-                      </button>
                       {/* <button className="btn btn-outline ">Edit</button> */}
                       <button
                         className="btn btn-outline btn-error "
                         onClick={() => {
-                          adminDeleteBlog(blog.id);
+                          adminDeleteHand(blog.id);
                         }}
                       >
                         Delete
@@ -86,4 +66,4 @@ const Table = () => {
   );
 };
 
-export default Table;
+export default HandTable;

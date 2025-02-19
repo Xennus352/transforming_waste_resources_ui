@@ -1,8 +1,21 @@
 import React from "react";
+import { motion } from "motion/react";
 
 const OurInfo = () => {
   return (
-    <div>
+    <motion.div
+      initial={{ opacity: 0, x: -60 }}
+      animate={{
+        opacity: 1,
+        x: 0, // Move to x: 0, then to x: -20, and back to x: 0
+        transition: {
+          delay: 0.5,
+          type: "spring",
+          duration: 0.6, // Adjust duration for a longer animation
+          bounce: 0.7,
+        },
+      }}
+    >
       <h2 className="font-bold text-xl">GetIn Touch With Us</h2>
 
       <div>
@@ -26,7 +39,7 @@ const OurInfo = () => {
           <p className="underline">xennus.dev@gmail.com</p>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 };
 

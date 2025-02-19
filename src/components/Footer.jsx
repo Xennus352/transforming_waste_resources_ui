@@ -12,7 +12,7 @@ const Footer = () => {
   // get current user
   const { data: user, isLoading } = useGetCurrentUser();
 
-  const { mutate: logout} = useLogout()
+  const { mutate: logout } = useLogout();
 
   const scrollToTop = () => {
     window.scrollTo({
@@ -29,32 +29,42 @@ const Footer = () => {
     >
       <footer className="footer footer-center bg-[#BE8D67] text-base-content rounded  p-10 bg-[url('./assets/overlay-top.png')] bg-center bg-cover">
         <nav className="grid grid-flow-col gap-4">
-          <Link to="/" className="btn btn-accent " onClick={scrollToTop}>
-            Home
-          </Link>
-          <Link to="/about" className="btn btn-accent " onClick={scrollToTop}>
-            About
-          </Link>
-          <Link
-            to="/contact-us"
-            className="btn btn-accent "
-            onClick={scrollToTop}
-          >
-            Contact
-          </Link>
-          <Link
-            to="/organization"
-            className="btn btn-accent "
-            onClick={scrollToTop}
-          >
-            Organization
-          </Link>
-
+          <div className="hidden md:block lg:block xl:block">
+            <Link to="/" className="btn btn-accent mx-3 " onClick={scrollToTop}>
+              Home
+            </Link>
+            <Link
+              to="/about"
+              className="btn btn-accent mx-3 "
+              onClick={scrollToTop}
+            >
+              About
+            </Link>
+            <Link
+              to="/contact-us"
+              className="btn btn-accent mx-3 "
+              onClick={scrollToTop}
+            >
+              Contact
+            </Link>
+            <Link
+              to="/organization"
+              className="btn btn-accent mx-3 "
+              onClick={scrollToTop}
+            >
+              Organization
+            </Link>
+          </div>
           {user ? (
-            <div className="btn btn-accent " onClick={() => { logout(user.id) }}>Logout</div>
+            <div
+              className="btn btn-accent "
+              onClick={() => {
+                logout(user.id);
+              }}
+            >
+              Logout
+            </div>
           ) : (
-            // <ModalBtn id="login-form" btnName="Login" iconName="" />
-
             <ModalBtn id="login-form" btnName="Login" iconName="" />
           )}
         </nav>{" "}

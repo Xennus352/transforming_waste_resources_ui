@@ -101,7 +101,7 @@ const AppNav = ({ user }) => {
       icon: <House />,
     },
     {
-      path: "blog",
+      path: "search",
       title: "Search",
       icon: <ScanSearch />,
     },

@@ -22,11 +22,10 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import SaveCollections from "./pages/app/SaveCollections";
 import Settings from "./pages/app/Settings";
 import MarketPage from "./pages/app/MarketPage";
-import BlogPage from "./pages/app/BlogPage";
+import SearchPage from "./pages/app/SearchPage";
 
 // for admin
 import Admin from "./pages/admin/Admin";
-import AdminFeed from "./pages/admin/AdminFeed";
 import AdminBlog from "./pages/admin/AdminBlog";
 import AdminMarketPage from "./pages/admin/AdminMarketPage";
 import AdminSettings from "./pages/admin/AdminSettings";
@@ -53,7 +52,6 @@ const App = () => {
             </ProtectedRoute>
           }
         >
-          <Route path="feed" element={<AdminFeed />} />
           <Route path="blog" element={<AdminBlog />} />
           <Route path="market" element={<AdminMarketPage />} />
           <Route path="feedback" element={<FeedbackPage />} />
@@ -71,7 +69,7 @@ const App = () => {
           }
         >
           <Route path="feed" element={<AppFeed />} />
-          <Route path="blog" element={<BlogPage />} />
+          <Route path="search" element={<SearchPage />} />
           <Route path="save" element={<SaveCollections />} />
           <Route path="market" element={<MarketPage />} />
           <Route path="setting" element={<Settings />} />
