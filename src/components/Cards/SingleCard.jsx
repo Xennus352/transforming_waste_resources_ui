@@ -9,7 +9,6 @@ import {
 import { modal } from "../../utils/modal";
 import { useComment } from "../../context/CommentContext";
 
-
 const SingleCard = ({ post, lang, totalLikes }) => {
   // context for comment
   const { setCurrentPostId } = useComment();
@@ -19,8 +18,9 @@ const SingleCard = ({ post, lang, totalLikes }) => {
 
   //like post
   const { mutate: likePost } = useLikePost();
-    // make useful 
-    const { mutate: usefulPost } = useMakeUsefulPost();
+
+  // make useful
+  const { mutate: usefulPost } = useMakeUsefulPost();
 
   return (
     <div className="">
@@ -53,12 +53,14 @@ const SingleCard = ({ post, lang, totalLikes }) => {
               <Heart size={25} /> <p>{totalLikes}</p>
             </button>
 
-              <button  className="btn btn-primary"
+            <button
+              className="btn btn-primary"
               onClick={() => {
                 usefulPost(post.id);
-              }}>
-              <UserCheck size={25}  />
-              </button>
+              }}
+            >
+              <UserCheck size={25} />
+            </button>
 
             <button
               className="btn btn-primary"

@@ -34,6 +34,44 @@ export const getCurrentUser = async () => {
   }
 };
 
+// update user
+export const updateUser = async (data) => {
+  // php api for feedback
+  const URL = "http://localhost:8000/api/user/update_user.php";
+  try {
+    // Get the session token from localStorage
+    const sessionToken = localStorage.getItem("session_token");
+
+    // If no session token exists, notify the user and return early
+    if (!sessionToken) {
+      toast.error("Session expired. Please log in again.");
+      modal("login-form");
+      return;
+    }
+
+    // Include the session token in the Authorization header
+    const response = await axios.post(URL, data, {
+      headers: {
+        Authorization: sessionToken, // Include session token for authentication
+      },
+    });
+
+    // Handle the response from the server
+    if (response.data.success) {
+      toast.success("Successfully Updated!");
+      console.log("Success:", response.data.message);
+    } else {
+      //one kind of error
+      toast.error("Something went wrong");
+      console.log("Pending:", "Waiting Response"); // Handle failure
+    }
+  } catch (error) {
+    toast.error(error);
+    console.log("Error during request:", error);
+    throw error;
+  }
+};
+
 // user create post
 export const createUserPost = async (data) => {
   // php api for feedback
@@ -90,6 +128,26 @@ export const getUserPost = async () => {
     throw error;
   }
 };
+
+// // delete user post
+// export const deleteUserPost = async (id) => {
+//   try {
+//     const URL = "http://localhost:8000/api/userPost/delete_post.php";
+//     const response = await axios.delete(URL, { data: { id } });
+
+//     if (response.data.success) {
+//       toast.success(response.data.message);
+//       return response.data;
+//     } else {
+//       toast.error(response.data.message);
+//       throw new Error(response.data.message);
+//     }
+//   } catch (error) {
+//     console.error("Error during request:", error);
+//     toast.error("An error occurred. Please try again later.");
+//     throw error;
+//   }
+// }
 
 // save user post
 export const saveUserPost = async (id) => {

@@ -1,8 +1,6 @@
 import React from "react";
 
-const HandmadeCard = ({ blog }) => {
-  const lang = localStorage.getItem("Language");
-
+const HandmadeCard = ({ blog, lang }) => {
   return (
     <div>
       <div className="card lg:card-side bg-base-100 shadow-xl m-2">
@@ -23,7 +21,9 @@ const HandmadeCard = ({ blog }) => {
             )}
           </div>
           <div className="card-actions justify-end">
-            <button disabled className="btn btn-primary">Nothing to do</button>
+            <button disabled className="btn btn-primary">
+              Nothing to do
+            </button>
           </div>
         </div>
       </div>

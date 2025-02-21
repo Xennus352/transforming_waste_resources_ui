@@ -97,7 +97,7 @@ const AppNav = ({ user }) => {
   const routes = [
     {
       path: "feed",
-      title: "Feed",
+      title: "New Feed",
       icon: <House />,
     },
     {

@@ -54,7 +54,7 @@ const Navbar = () => {
               alt="Company Logo"
             />
           </div>
-          <ReactTypingEffect className="text-4xl" text={["Revelation "]} />
+          <ReactTypingEffect className="text-4xl" text={["Waste 2 Resource "]} />
         </div>
         <div className="bg-[url('assets/menu-bg.png')] bg-cover p-3">
           <ul className=" flex items-center justify-evenly flex-wrap">

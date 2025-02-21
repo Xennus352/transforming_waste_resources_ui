@@ -8,6 +8,10 @@ import { Languages } from "lucide-react";
 const AppFeed = () => {
   const [lang, setLang] = useState(false);
 
+  //TODO: get comment query need to check
+  //TODO: to create market page
+  //TODO: to handle the language change
+
   // get post
   const { data: posts = [], isLoading, isError } = useGetUserPost();
 

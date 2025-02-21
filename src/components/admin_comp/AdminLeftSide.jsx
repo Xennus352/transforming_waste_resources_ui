@@ -7,10 +7,13 @@ const AdminLeftSide = ({ user }) => {
     <div className="sticky top-0">
       {/* user profile */}
 
-      <div  className="  border-b-4 rounded-sm  border-teal-200">
+      <div className="  border-b-4 rounded-sm  border-teal-200">
         <div className="avatar w-full select-none">
           <div className="w-24 rounded-full mx-auto my-0">
-            <img src={ProfilePic} alt="Profile" />
+            <img
+              src={user?.picture ? user.picture : ProfilePic}
+              alt="Profile"
+            />
           </div>
         </div>
         <p className="text-center border-b-4 rounded-sm uppercase tracking-widest hidden sm:hidden md:block lg:block xl:block">

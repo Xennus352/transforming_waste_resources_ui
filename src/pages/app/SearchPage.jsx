@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import BlogCard from "../../components/Cards/BlogCard";
-import { Search } from "lucide-react";
 import Divider from "../../components/Divider";
 import {
   useGetLike,
@@ -60,13 +59,14 @@ const BlogPage = () => {
 
   //* specific button array
   const wastType = [
-    { title: "search" },
+    { title: "all" },
     { title: "most like" },
     { title: "useful" },
     { title: "water" },
     { title: "air" },
     { title: "ground" },
     { title: "plastic" },
+    { title: "other" },
   ];
 
   // for data display
@@ -79,7 +79,7 @@ const BlogPage = () => {
 
   // to handle the request
   switch (display) {
-    case "search":
+    case "all":
       content = filteredPosts.map((blog, i) => {
         // Find the total likes for the current post
         const postLikes = totalLike?.find((like) => like.post_id === blog.id);
@@ -181,6 +181,24 @@ const BlogPage = () => {
     case "plastic":
       content = filteredPosts
         .filter((post) => post.category === "plastic")
+        .map((blog, i) => {
+          const postLikes = totalLike?.find((like) => like.post_id === blog.id);
+          const totalLikesCount = postLikes ? postLikes.total_like_count : 0;
+          return (
+            <div key={i}>
+              <SingleCard
+                post={blog}
+                lang={lang}
+                totalLikes={totalLikesCount}
+              />
+            </div>
+          );
+        });
+      break;
+
+    case "other":
+      content = filteredPosts
+        .filter((post) => post.category === "other")
         .map((blog, i) => {
           const postLikes = totalLike?.find((like) => like.post_id === blog.id);
           const totalLikesCount = postLikes ? postLikes.total_like_count : 0;

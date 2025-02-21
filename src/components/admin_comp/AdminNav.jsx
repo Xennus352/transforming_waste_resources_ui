@@ -17,8 +17,8 @@ const AdminNav = ({ user }) => {
 
   const { mutate: logout } = useLogout();
 
-  const path = location.pathname; 
-  const lastSegment = path.split('/').pop(); 
+  const path = location.pathname;
+  const lastSegment = path.split("/").pop();
 
   // routes
   const routes = [
@@ -29,7 +29,7 @@ const AdminNav = ({ user }) => {
     // },
     {
       path: "blog",
-      title: "Feed",
+      title: "New Feed",
       icon: <House />,
     },
     {

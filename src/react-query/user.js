@@ -12,6 +12,7 @@ import {
   likeUserPost,
   makeUseful,
   saveUserPost,
+  updateUser,
 } from "../apis/user/currentUser";
 
 // to get current user
@@ -19,6 +20,19 @@ export const useGetCurrentUser = () => {
   return useQuery({
     queryKey: ["get-current-user-data"],
     queryFn: getCurrentUser,
+  });
+};
+
+// update user
+export const useUpdateUser = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (data) => updateUser(data),
+    onSuccess: () => {
+      // Invalidate and refetch
+      // queryClient.invalidateQueries(["user-create-post"]);
+      // queryClient.refetchQueries(["user-create-post"]);
+    },
   });
 };
 
@@ -147,7 +161,7 @@ export const useCommentPost = () => {
 export const useMakeUsefulPost = () => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: (id) => makeUseful({id}),
+    mutationFn: (id) => makeUseful({ id }),
     onSuccess: () => {
       // Invalidate and refetch
       queryClient.invalidateQueries(["user-create-post"]);
