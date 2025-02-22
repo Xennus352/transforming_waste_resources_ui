@@ -1,6 +1,7 @@
 import axios from "axios";
 import toast from "react-hot-toast";
 
+//current login user
 export const getCurrentUser = async () => {
   // PHP API endpoint for getting the current user
   const URL = "http://localhost:8000/api/auth/get_current_user.php";
@@ -31,6 +32,53 @@ export const getCurrentUser = async () => {
     }
   } catch (error) {
     throw new Error(`Error during request: ${error.message}`);
+  }
+};
+
+// get all user
+export const getAllUsers = async () => {
+  // PHP API endpoint for getting the user
+  const URL = "http://localhost:8000/api/user/get_user.php";
+
+  try {
+    // Include the session token in the Authorization header
+    const response = await axios.get(URL);
+
+    // Handle the response from the server
+    if (response.data) {
+      return response.data.data; // Return the user data
+    } else {
+      // Handle failure
+      throw new Error(`Failed: ${response.data.message}`);
+    }
+  } catch (error) {
+    throw new Error(`Error during request: ${error.message}`);
+  }
+};
+
+//delete user
+export const deleteUser = async (id) => {
+  try {
+    const URL = "http://localhost:8000/api/user/delete_user.php";
+
+    // Send the DELETE request with the post ID in the request body
+    const response = await axios.delete(URL, {
+      data: {
+        user_id: id, // Wrap the id in an object
+      },
+    });
+
+    if (response.data.success) {
+      toast.success(response.data.message);
+      return response.data;
+    } else {
+      toast.error(response.data.message);
+      throw new Error(response.data.message);
+    }
+  } catch (error) {
+    console.error("Error during request:", error);
+    toast.error("An error occurred. Please try again later.");
+    throw new Error(error);
   }
 };
 

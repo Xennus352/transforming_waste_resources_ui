@@ -1,5 +1,10 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { createProduct, getAllProduct } from "../apis/market/productControl";
+import {
+  cancelOrder,
+  createProduct,
+  getAllProduct,
+  orderProduct,
+} from "../apis/market/productControl";
 
 // to create product
 export const useCreateProduct = () => {
@@ -8,8 +13,8 @@ export const useCreateProduct = () => {
     mutationFn: (data) => createProduct(data),
     onSuccess: () => {
       // Invalidate and refetch
-      queryClient.invalidateQueries(["user-create-post"]);
-      queryClient.refetchQueries(["user-create-post"]);
+      queryClient.invalidateQueries(["product"]);
+      queryClient.refetchQueries(["product"]);
     },
   });
 };
@@ -23,5 +28,44 @@ export const useGetProduct = () => {
     staleTime: 5000,
     refetchIntervalInBackground: 10000,
     notifyOnChangeProps: ["data"],
+  });
+};
+
+// get order
+export const useGetOrder = () => {
+  return useQuery({
+    queryKey: ["order"],
+    queryFn: getAllProduct,
+    refetchInterval: 10000,
+    staleTime: 5000,
+    refetchIntervalInBackground: 10000,
+    notifyOnChangeProps: ["data"],
+  });
+};
+
+// order product
+export const useOrderProduct = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (data) => orderProduct(data),
+    onSuccess: () => {
+      // Invalidate and refetch
+      queryClient.invalidateQueries(["order"]);
+      queryClient.refetchQueries(["order"]);
+    },
+  });
+};
+
+// cancle order
+export const useCancleOrder = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn:(product_id) => cancelOrder(product_id),
+    onSuccess: () => {
+      // Invalidate and refetch
+      queryClient.invalidateQueries(["order"]);
+      queryClient.refetchQueries(["order"]);
+    },
   });
 };

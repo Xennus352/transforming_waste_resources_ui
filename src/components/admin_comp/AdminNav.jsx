@@ -5,9 +5,10 @@ import {
   House,
   LetterText,
   LogOut,
-  ScanSearch,
+  PersonStanding,
   Settings,
   Store,
+  User,
   Webhook,
 } from "lucide-react";
 import { useLogout } from "../../react-query/auth";
@@ -22,11 +23,11 @@ const AdminNav = ({ user }) => {
 
   // routes
   const routes = [
-    // {
-    //   path: "feed",
-    //   title: "Feed",
-    //   icon: <House />,
-    // },
+    {
+      path: "user",
+      title: "User",
+      icon: <User />,
+    },
     {
       path: "blog",
       title: "New Feed",

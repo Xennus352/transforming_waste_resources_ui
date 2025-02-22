@@ -31,6 +31,7 @@ import AdminMarketPage from "./pages/admin/AdminMarketPage";
 import AdminSettings from "./pages/admin/AdminSettings";
 import AdminHandMadeGuidePage from "./pages/admin/AdminHandMadeGuidePage";
 import FeedbackPage from "./pages/admin/FeedbackPage";
+import UserList from "./pages/admin/UserList";
 
 const App = () => {
   return (
@@ -53,6 +54,7 @@ const App = () => {
           }
         >
           <Route path="blog" element={<AdminBlog />} />
+          <Route path="user" element={<UserList />} />
           <Route path="market" element={<AdminMarketPage />} />
           <Route path="feedback" element={<FeedbackPage />} />
           <Route path="setting" element={<AdminSettings />} />

@@ -1,18 +1,14 @@
 import React, { useState } from "react";
 import Divider from "../../components/Divider";
-import { useGetLike } from "../../react-query/user";
 import { useGetProduct } from "../../react-query/product";
 import { useForm } from "react-hook-form";
 import MarketCard from "../../components/Cards/MarketCard";
 import { modal } from "../../utils/modal";
 
 const MarketPage = () => {
-  // get like
-  const { data: totalLike } = useGetLike();
-
   // get product
   const { data: products = [], isLoading, isError } = useGetProduct();
-  console.log(products);
+
   // handle form inputs using react hook form
   const [display, setDisplay] = useState("");
 
@@ -38,7 +34,7 @@ const MarketPage = () => {
     return new Date(b.created_at) - new Date(a.created_at);
   });
 
-  //! for form submitting
+  //! for search form submitting no need for now but keep it for future
   const onSubmit = (data) => {
     console.log(data);
   };

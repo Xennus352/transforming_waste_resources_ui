@@ -6,6 +6,7 @@ import {
   deleteBlogPost,
   getBlogPost,
 } from "../../apis/admin/blog_control";
+import { deleteUser, getAllUsers } from "../../apis/user/currentUser";
 
 export const useCreateBlog = () => {
   const queryClient = useQueryClient();
@@ -61,6 +62,31 @@ export const useDeleteHand = () => {
     onSuccess: () => {
       // Invalidate and refetch the blog list
       queryClient.invalidateQueries(["admin-create-blog"]);
+    },
+    onError: (error) => {
+      console.error("Mutation error:", error);
+    },
+  });
+};
+
+//get all users
+export const useGetAllUsers = () => {
+  return useQuery({
+    queryKey: ["all-users"],
+    queryFn: getAllUsers,
+    refetchInterval: 10000,
+  });
+};
+
+//delete user
+export const useDeleteUser = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: deleteUser,
+    onSuccess: () => {
+      // Invalidate and refetch the blog list
+      queryClient.invalidateQueries(["all-users"]);
     },
     onError: (error) => {
       console.error("Mutation error:", error);

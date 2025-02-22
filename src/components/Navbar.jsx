@@ -2,12 +2,16 @@ import React from "react";
 import { Link, useLocation, useMatch } from "react-router-dom";
 import ReactTypingEffect from "react-typing-effect";
 import { Building2, Contact, House, Info, LayoutGrid } from "lucide-react";
+import { useGetCurrentUser } from "../react-query/user";
 
 const Navbar = () => {
   const { pathname } = useLocation();
 
   const isAppRoute = useMatch("/app/*");
   const isAdminRoute = useMatch("/dashboard/*");
+
+  //get current user
+  const { data: currentUser } = useGetCurrentUser();
 
   const routes = [
     {
@@ -22,7 +26,7 @@ const Navbar = () => {
     },
     {
       title: "App",
-      path: "/app/feed",
+      path: currentUser?.role == "admin" ? "/dashboard/user" : "/app/feed",
       icon: <LayoutGrid />,
     },
     {
@@ -47,14 +51,17 @@ const Navbar = () => {
     >
       <div>
         <div className=" font-bold flex items-center gap-3 justify-center p-3">
-          <div className="flex justify-center items-center">
+          {/* <div className="flex justify-center items-center">
             <img
               src="/src/assets/titleLogo.png"
               className="object-contain text-black h-10"
               alt="Company Logo"
             />
-          </div>
-          <ReactTypingEffect className="text-4xl" text={["Waste 2 Resource "]} />
+          </div> */}
+          <ReactTypingEffect
+            className="text-4xl"
+            text={["Waste 2 Resource "]}
+          />
         </div>
         <div className="bg-[url('assets/menu-bg.png')] bg-cover p-3">
           <ul className=" flex items-center justify-evenly flex-wrap">

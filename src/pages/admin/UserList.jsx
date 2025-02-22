@@ -1,22 +1,15 @@
 import React from "react";
-import {
-  useApprovePost,
-  useDeleteBlog,
-  useGetBlog,
-} from "../../react-query/admin/admin";
-import { useGetUserPost } from "../../react-query/user";
+import recycleSign from "../../assets/recycle-sign.png";
 
-const Table = () => {
-  const { data: blog } = useGetBlog();
+import { useDeleteUser, useGetAllUsers } from "../../react-query/admin/admin";
 
-  // get all user post
-  const { data: userPosts, isLoading } = useGetUserPost();
+const UserList = () => {
+  // get all users
+  const { data: users, isLoading } = useGetAllUsers();
+  console.log(users);
 
-  //delete posts
-  const { mutate: adminDeleteBlog } = useDeleteBlog();
-
-  // approve post
-  const { mutate: approve } = useApprovePost();
+  //delete user
+  const { mutate: deleteUser } = useDeleteUser();
 
   return (
     <div>
@@ -26,8 +19,9 @@ const Table = () => {
           <thead className="text-lg">
             <tr>
               <th></th>
-              <th>Title</th>
-              <th>Description</th>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Role</th>
               <th>Picture</th>
               <th>Actions</th>
             </tr>
@@ -40,37 +34,32 @@ const Table = () => {
             )}
             {/* row  */}
 
-            {userPosts &&
-              userPosts.map((blog, index) => {
+            {users &&
+              users.map((user, index) => {
                 return (
                   <tr key={index} className="hover hover:cursor-pointer ">
                     <th>{index + 1}</th>
-                    <td>{blog.title}</td>
-                    <td>{blog.content}</td>
-                    <td className=" col-span-1">{blog.contentInBurmese}</td>
-                    <td></td>
+                    <td>{user.username}</td>
+                    <td>{user.email}</td>
+                    <td>{user.role}</td>
                     <td className="p-0">
                       <img
-                        src={blog.picture}
-                        className=" w-2/4 h-1/4 object-cover"
+                        src={user.picture ? user.picture : recycleSign}
+                        className=" w-2/4 h-1/4 object-cover rounded-full"
                         alt="picture"
                       />
                     </td>
                     <td className="flex flex-col gap-2 items-center h-full  my-6">
-                      <button
+                      {/* <button
                         className="btn btn-outline btn-primary disabled:bg-success disabled:cursor-not-allowed"
-                        disabled={blog.isApprove == 1}
-                        onClick={() => {
-                          approve(blog.id);
-                        }}
+                        onClick={() => {}}
                       >
-                        Approve
-                      </button>
-                      {/* <button className="btn btn-outline ">Edit</button> */}
+                        Update
+                      </button> */}
                       <button
                         className="btn btn-outline btn-error "
                         onClick={() => {
-                          adminDeleteBlog(blog.id);
+                          deleteUser(user.id);
                         }}
                       >
                         Delete
@@ -86,4 +75,4 @@ const Table = () => {
   );
 };
 
-export default Table;
+export default UserList;

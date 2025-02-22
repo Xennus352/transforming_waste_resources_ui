@@ -1,11 +1,17 @@
-import { Minus, PackageCheck, Plus } from "lucide-react";
+import { Minus, PackageCheck, Plus, TicketX } from "lucide-react";
 import React from "react";
+import { useCancleOrder, useOrderProduct } from "../../react-query/product";
 
-const MarketCard = ({ post, onSubmit }) => {
-  //TODO: Add a form to submit the quantity of the product
+const MarketCard = ({ post }) => {
   // product quality
   const [quantity, setQuantity] = React.useState(1);
-  console.log(post);
+
+  // order product
+  const { mutate: order, isSuccess: orderDone } = useOrderProduct();
+
+  // for cancle order
+  const { mutate: cancelOrder, isSuccess: orderCanceled } = useCancleOrder();
+
   // total cost
   let totalCost = post.price * quantity;
   // control quality
@@ -16,6 +22,13 @@ const MarketCard = ({ post, onSubmit }) => {
     setQuantity(quantity - 1);
   };
   //end of control quality
+
+  // for ordering the product
+  const handleOrder = (productId, quantity, totalCost) => {
+    const data = { product_id: productId, quantity, price: totalCost };
+    order(data);
+  };
+
   return (
     <div className="">
       <div className="card lg:card-side shadow-xl bg-base-100 ">
@@ -54,15 +67,32 @@ const MarketCard = ({ post, onSubmit }) => {
               <p>{quantity}</p>
               <button
                 className="btn btn-outline"
-                disabled={quantity === 50}
+                disabled={quantity == post.quantity}
                 onClick={addQuantity}
               >
                 <Plus size={25} />
               </button>
             </div>
-            <button className="btn btn-primary">
-              <PackageCheck size={25} /> <p>Buy Now</p>
-            </button>
+            <div className="flex flex-wrap items-center gap-4 justify-center">
+              <button
+                className={`btn btn-primary `}
+                disabled={orderDone}
+                onClick={() => {
+                  handleOrder(post.id, quantity, totalCost);
+                }}
+              >
+                <PackageCheck size={25} /> <p>Buy Now</p>
+              </button>
+              <button
+                className={`btn btn-primary `}
+                disabled={!orderDone || orderCanceled}
+                onClick={() => {
+                  cancelOrder(post.id);
+                }}
+              >
+                <TicketX size={25} /> <p>Cancel Order</p>
+              </button>
+            </div>
           </div>
         </div>
       </div>
