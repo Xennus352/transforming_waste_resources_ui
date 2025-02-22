@@ -41,6 +41,11 @@ const BlogPage = () => {
       post.content.toLowerCase().includes(searchTerm.toLowerCase()) // Assuming posts have a body
   );
 
+  // Sort filtered posts in descending order based on the created_at property
+  const sortedFilteredPosts = filteredPosts.sort((a, b) => {
+    return new Date(b.created_at) - new Date(a.created_at);
+  });
+
   //! for form submitting
   const onSubmit = (data) => {
     console.log(data);
@@ -80,7 +85,7 @@ const BlogPage = () => {
   // to handle the request
   switch (display) {
     case "all":
-      content = filteredPosts.map((blog, i) => {
+      content = sortedFilteredPosts.map((blog, i) => {
         // Find the total likes for the current post
         const postLikes = totalLike?.find((like) => like.post_id === blog.id);
         const totalLikesCount = postLikes ? postLikes.total_like_count : 0; // Assuming 'count' holds the number of likes

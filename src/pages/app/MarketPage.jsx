@@ -1,19 +1,18 @@
 import React, { useState } from "react";
 import Divider from "../../components/Divider";
-import {
-  useGetLike,
-  useGetUserPost,
-} from "../../react-query/user";
+import { useGetLike } from "../../react-query/user";
+import { useGetProduct } from "../../react-query/product";
 import { useForm } from "react-hook-form";
 import MarketCard from "../../components/Cards/MarketCard";
+import { modal } from "../../utils/modal";
 
-const BlogPage = () => {
-  const { data: posts = [], isLoading, isError } = useGetUserPost();
-
+const MarketPage = () => {
   // get like
   const { data: totalLike } = useGetLike();
 
-
+  // get product
+  const { data: products = [], isLoading, isError } = useGetProduct();
+  console.log(products);
   // handle form inputs using react hook form
   const [display, setDisplay] = useState("");
 
@@ -28,17 +27,21 @@ const BlogPage = () => {
   const searchTerm = watch("searchTerm", "");
 
   // Filter posts based on the search term
-  const filteredPosts = posts.filter(
+  const filteredPosts = products?.filter(
     (post) =>
-      post.title.toLowerCase().includes(searchTerm.toLowerCase()) || // Assuming posts have a title
-      post.content.toLowerCase().includes(searchTerm.toLowerCase()) // Assuming posts have a body
+      post.product_name.toLowerCase().includes(searchTerm.toLowerCase()) || // Assuming posts have a title
+      post.description.toLowerCase().includes(searchTerm.toLowerCase()) // Assuming posts have a body
   );
+
+  // Sort filtered posts in descending order based on the created_at property
+  const sortedFilteredPosts = filteredPosts.sort((a, b) => {
+    return new Date(b.created_at) - new Date(a.created_at);
+  });
 
   //! for form submitting
   const onSubmit = (data) => {
     console.log(data);
   };
-
 
   //* specific button array
   const wastType = [
@@ -61,11 +64,7 @@ const BlogPage = () => {
   // to handle the request
   switch (display) {
     case "all":
-      content = filteredPosts.map((blog, i) => {
-        // Find the total likes for the current post
-        const postLikes = totalLike?.find((like) => like.post_id === blog.id);
-        const totalLikesCount = postLikes ? postLikes.total_like_count : 0; // Assuming 'count' holds the number of likes
-
+      content = sortedFilteredPosts.map((blog, i) => {
         return (
           <div key={i}>
             <MarketCard post={blog} />
@@ -74,10 +73,9 @@ const BlogPage = () => {
       });
       break;
 
-
     // Add more cases for other filters
     case "water":
-      content = filteredPosts
+      content = sortedFilteredPosts
         .filter((post) => post.category === "water")
         .map((blog, i) => {
           return (
@@ -90,7 +88,7 @@ const BlogPage = () => {
 
     // Add more cases for other filters
     case "air":
-      content = filteredPosts
+      content = sortedFilteredPosts
         .filter((post) => post.category === "air")
         .map((blog, i) => {
           return (
@@ -103,7 +101,7 @@ const BlogPage = () => {
 
     // Add more cases for other filters
     case "ground":
-      content = filteredPosts
+      content = sortedFilteredPosts
         .filter((post) => post.category === "ground")
         .map((blog, i) => {
           return (
@@ -116,7 +114,7 @@ const BlogPage = () => {
 
     // Add more cases for other filters
     case "plastic":
-      content = filteredPosts
+      content = sortedFilteredPosts
         .filter((post) => post.category === "plastic")
         .map((blog, i) => {
           return (
@@ -128,7 +126,7 @@ const BlogPage = () => {
       break;
 
     case "other":
-      content = filteredPosts
+      content = sortedFilteredPosts
         .filter((post) => post.category === "other")
         .map((blog, i) => {
           return (
@@ -140,7 +138,7 @@ const BlogPage = () => {
       break;
 
     default:
-      content = filteredPosts.map((blog, i) => {
+      content = sortedFilteredPosts.map((blog, i) => {
         return (
           <div key={i}>
             <MarketCard post={blog} />
@@ -162,6 +160,17 @@ const BlogPage = () => {
             className="input input-bordered input-primary w-full  max-w-xl"
           />
         </form>
+
+        <div>
+          <button
+            className="btn btn-outline"
+            onClick={() => {
+              modal("product");
+            }}
+          >
+            Create!
+          </button>
+        </div>
       </div>
 
       {/* for sub buttons  */}
@@ -199,4 +208,4 @@ const BlogPage = () => {
   );
 };
 
-export default BlogPage;
+export default MarketPage;
