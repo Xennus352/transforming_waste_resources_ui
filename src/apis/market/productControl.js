@@ -98,6 +98,27 @@ export const orderProduct = async (data) => {
   }
 };
 
+// get order
+export const getOrder = async () => {
+  // php api for order
+  const URL = "http://localhost:8000/api/market/get_order.php";
+  try {
+    const response = await axios.get(URL);
+
+    // Handle the response from the server
+    if (response.data) {
+      return response.data.data;
+    } else {
+      toast.error(response.data.message);
+      console.log("Failed:", response.data.message); // Handle failure
+    }
+  } catch (error) {
+    console.log("Error during request:", error);
+    toast.error("An error occurred. Please try again later.");
+    throw error;
+  }
+};
+
 //cancel order
 export const cancelOrder = async (product_id) => {
   try {

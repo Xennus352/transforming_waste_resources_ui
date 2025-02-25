@@ -52,7 +52,7 @@ const Footer = () => {
               className="btn btn-accent mx-3 "
               onClick={scrollToTop}
             >
-              Organization
+              Infomation
             </Link>
           </div>
           {user ? (

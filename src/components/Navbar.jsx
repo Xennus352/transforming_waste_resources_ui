@@ -35,7 +35,7 @@ const Navbar = () => {
       icon: <Contact />,
     },
     {
-      title: "Organization",
+      title: "Infomation",
       path: "/organization",
       icon: <Building2 />,
     },
@@ -60,7 +60,7 @@ const Navbar = () => {
           </div> */}
           <ReactTypingEffect
             className="text-4xl"
-            text={["Waste 2 Resource "]}
+            text={["Waste to Wealth "]}
           />
         </div>
         <div className="bg-[url('assets/menu-bg.png')] bg-cover p-3">

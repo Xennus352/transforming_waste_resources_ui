@@ -39,7 +39,7 @@ const MarketCard = ({ post }) => {
           <h2 className="card-title">{post.product_name}</h2>
           <div className="">
             <div>
-              <p>{post.description} this is content of the products</p>
+              <p>{post.description}</p>
               <p className="badge badge-outline">{post.price} MMK</p>
             </div>
           </div>

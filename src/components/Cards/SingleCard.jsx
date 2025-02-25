@@ -1,5 +1,5 @@
 import { BookMarked, Heart, MessageSquareCode, UserCheck } from "lucide-react";
-import React from "react";
+import React, { useState } from "react";
 import {
   useGetLike,
   useLikePost,
@@ -13,6 +13,12 @@ const SingleCard = ({ post, lang, totalLikes }) => {
   // context for comment
   const { setCurrentPostId } = useComment();
 
+  //long text
+  const [isExpanded, setIsExpanded] = useState("false");
+
+  // toggle expand
+  const toggleExpand = () => setIsExpanded(!isExpanded);
+
   // save post
   const { mutate: savePost } = useSaveUserPost();
 
@@ -21,6 +27,15 @@ const SingleCard = ({ post, lang, totalLikes }) => {
 
   // make useful
   const { mutate: usefulPost } = useMakeUsefulPost();
+
+  // word split function
+  const truncateDescription = (description, wordLimit) => {
+    if (!description) return "";
+    const words = description.split(" ");
+    return words.length > wordLimit
+      ? words.slice(0, wordLimit).join(" ") + "..."
+      : description;
+  };
 
   return (
     <div className="">
@@ -32,12 +47,35 @@ const SingleCard = ({ post, lang, totalLikes }) => {
           <h2 className="card-title">{post.title}</h2>
           <div className="">
             {lang ? (
-              <p>{post.content}</p>
+              <p className="whitespace-pre-wrap">
+                {isExpanded
+                  ? truncateDescription(post.content, 100)
+                  : post?.content}
+                {post?.content.split(" ").length > 100 && (
+                  <button
+                    className="badge badge-outline m-2 hover:shadow-lg"
+                    onClick={toggleExpand}
+                  >
+                    {isExpanded ? "Show More" : "Show Less"}
+                  </button>
+                )}
+              </p>
             ) : (
-              <p>
-                {post.contentInBurmese
-                  ? post.contentInBurmese
+              <p className="whitespace-pre-wrap">
+                {post?.contentInBurmese
+                  ? isExpanded
+                    ? post.contentInBurmese
+                    : truncateDescription(post.contentInBurmese, 50)
                   : "Not add in db"}
+                {post.contentInBurmese &&
+                  post?.contentInBurmese.split(" ").length > 50 && (
+                    <button
+                      className="badge badge-outline m-2 hover:shadow-lg"
+                      onClick={toggleExpand}
+                    >
+                      {isExpanded ? "Show More" : "Show Less"}
+                    </button>
+                  )}
               </p>
             )}
           </div>

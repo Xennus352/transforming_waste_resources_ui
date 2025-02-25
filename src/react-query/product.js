@@ -3,6 +3,7 @@ import {
   cancelOrder,
   createProduct,
   getAllProduct,
+  getOrder,
   orderProduct,
 } from "../apis/market/productControl";
 
@@ -35,7 +36,7 @@ export const useGetProduct = () => {
 export const useGetOrder = () => {
   return useQuery({
     queryKey: ["order"],
-    queryFn: getAllProduct,
+    queryFn: getOrder,
     refetchInterval: 10000,
     staleTime: 5000,
     refetchIntervalInBackground: 10000,
@@ -55,6 +56,7 @@ export const useOrderProduct = () => {
     },
   });
 };
+
 
 // cancle order
 export const useCancleOrder = () => {

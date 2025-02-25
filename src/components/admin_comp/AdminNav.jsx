@@ -4,8 +4,8 @@ import {
   BookCopy,
   House,
   LetterText,
+  ListOrdered,
   LogOut,
-  PersonStanding,
   Settings,
   Store,
   User,
@@ -37,6 +37,11 @@ const AdminNav = ({ user }) => {
       path: "market",
       title: "Market",
       icon: <Store />,
+    },
+    {
+      path: "order",
+      title: "Order",
+      icon: <ListOrdered />,
     },
 
     {
@@ -87,7 +92,7 @@ const AdminNav = ({ user }) => {
         onClick={() => navigate("/")}
       >
         <span className="hidden sm:hidden md:block lg:block xl:block">
-          Wbsite
+          Website
         </span>
         <Webhook />
       </div>

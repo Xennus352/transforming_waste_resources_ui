@@ -1,18 +1,20 @@
 import React from "react";
 import recycleSign from "../../assets/recycle-sign.png";
+import Divider from "../../components/Divider";
+import { useCancleOrder, useGetOrder } from "../../react-query/product";
 
-import { useDeleteUser, useGetAllUsers } from "../../react-query/admin/admin";
-
-const UserList = () => {
+const ListOrder = () => {
   // get all users
-  const { data: users, isLoading } = useGetAllUsers();
-  console.log(users);
+  const { data: orders, isLoading } = useGetOrder();
+  console.log(orders);
 
   //delete user
-  const { mutate: deleteUser } = useDeleteUser();
+  const { mutate: deleteOrder } = useCancleOrder();
 
   return (
     <div>
+      <div className="text-xl m-2">OrderLists</div>
+      <Divider />
       <div className="overflow-x-auto">
         <table className="table">
           {/* head */}
@@ -20,9 +22,10 @@ const UserList = () => {
             <tr>
               <th></th>
               <th>Name</th>
-              <th>Email</th>
-              <th>Role</th>
-              <th>Picture</th>
+              <th>Product ID</th>
+              <th>Quantity</th>
+              <th>Total price</th>
+              <th>Order date</th>
               <th>Actions</th>
             </tr>
           </thead>
@@ -34,21 +37,16 @@ const UserList = () => {
             )}
             {/* row  */}
 
-            {users &&
-              users.map((user, index) => {
+            {orders &&
+              orders.map((order, index) => {
                 return (
                   <tr key={index} className="hover hover:cursor-pointer ">
                     <th>{index + 1}</th>
-                    <td>{user.username}</td>
-                    <td>{user.email}</td>
-                    <td>{user.role}</td>
-                    <td className="p-0">
-                      <img
-                        src={user.picture ? user.picture : recycleSign}
-                        className=" w-20 h-20 object-cover rounded-full"
-                        alt="picture"
-                      />
-                    </td>
+                    <td>{order.username}</td>
+                    <td>{order.product_id}</td>
+                    <td>{order.quantity}</td>
+                    <td>{order.total_price}</td>
+                    <td>{order.order_date}</td>
                     <td className="flex flex-col gap-2 items-center h-full  my-6">
                       {/* <button
                         className="btn btn-outline btn-primary disabled:bg-success disabled:cursor-not-allowed"
@@ -59,7 +57,7 @@ const UserList = () => {
                       <button
                         className="btn btn-outline btn-error "
                         onClick={() => {
-                          deleteUser(user.id);
+                          deleteOrder(order.product_id);
                         }}
                       >
                         Delete
@@ -75,4 +73,4 @@ const UserList = () => {
   );
 };
 
-export default UserList;
+export default ListOrder;

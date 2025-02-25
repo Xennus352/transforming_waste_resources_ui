@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import BlogCard from "../../components/Cards/BlogCard";
 import Divider from "../../components/Divider";
 import {
@@ -8,9 +8,13 @@ import {
 } from "../../react-query/user";
 import { useForm } from "react-hook-form";
 import SingleCard from "../../components/Cards/SingleCard";
+import { Languages } from "lucide-react";
 
 const BlogPage = () => {
   const { data: posts = [], isLoading, isError } = useGetUserPost();
+
+  // for language
+  const [lang, setLang] = useState(false);
 
   // get post by most liked
   const { data: mostLike } = useGetLikeByTotalCount();
@@ -18,8 +22,30 @@ const BlogPage = () => {
   // get like
   const { data: totalLike } = useGetLike();
 
-  // get language
-  const lang = localStorage.getItem("Language");
+  // Effect to set initial language from localStorage
+  useEffect(() => {
+    const currentLang = localStorage.getItem("Language");
+    if (currentLang === "myanmar") {
+      setLang(false); // Assuming true means Myanmar
+    } else {
+      setLang(true); // Assuming false means English
+    }
+  }, [lang]);
+
+  // Function to toggle language
+  const toggleLanguage = () => {
+    // Get the current language from localStorage
+    const currentLang = localStorage.getItem("Language");
+
+    // Toggle the language
+    if (currentLang === "myanmar") {
+      localStorage.setItem("Language", "english"); // Set to English
+      setLang(true); // Update state to English
+    } else {
+      localStorage.setItem("Language", "myanmar"); // Set to Myanmar
+      setLang(false); // Update state to Myanmar
+    }
+  };
 
   // handle form inputs using react hook form
   const [display, setDisplay] = useState("");
@@ -68,9 +94,12 @@ const BlogPage = () => {
     { title: "most like" },
     { title: "useful" },
     { title: "water" },
-    { title: "air" },
+    { title: "gas" },
     { title: "ground" },
     { title: "plastic" },
+    { title: "tire" },
+    { title: "paper" },
+    { title: "food" },
     { title: "other" },
   ];
 
@@ -92,7 +121,14 @@ const BlogPage = () => {
 
         return (
           <div key={i}>
-            <SingleCard post={blog} lang={lang} totalLikes={totalLikesCount} />
+            {/* only show when admin is approve  */}
+            {blog.isApprove == 1 && (
+              <SingleCard
+                post={blog}
+                lang={lang}
+                totalLikes={totalLikesCount}
+              />
+            )}
           </div>
         );
       });
@@ -112,11 +148,13 @@ const BlogPage = () => {
 
           return (
             <div key={i}>
-              <SingleCard
-                post={blog}
-                lang={lang}
-                totalLikes={totalLikesCount}
-              />
+              {blog.isApprove == 1 && (
+                <SingleCard
+                  post={blog}
+                  lang={lang}
+                  totalLikes={totalLikesCount}
+                />
+              )}
             </div>
           );
         });
@@ -132,11 +170,13 @@ const BlogPage = () => {
 
           return (
             <div key={i}>
-              <SingleCard
-                post={blog}
-                lang={lang}
-                totalLikes={totalLikesCount}
-              />
+              {blog.isApprove == 1 && (
+                <SingleCard
+                  post={blog}
+                  lang={lang}
+                  totalLikes={totalLikesCount}
+                />
+              )}
             </div>
           );
         });
@@ -152,11 +192,13 @@ const BlogPage = () => {
 
           return (
             <div key={i}>
-              <SingleCard
-                post={blog}
-                lang={lang}
-                totalLikes={totalLikesCount}
-              />
+              {blog.isApprove == 1 && (
+                <SingleCard
+                  post={blog}
+                  lang={lang}
+                  totalLikes={totalLikesCount}
+                />
+              )}
             </div>
           );
         });
@@ -172,11 +214,13 @@ const BlogPage = () => {
 
           return (
             <div key={i}>
-              <SingleCard
-                post={blog}
-                lang={lang}
-                totalLikes={totalLikesCount}
-              />
+              {blog.isApprove == 1 && (
+                <SingleCard
+                  post={blog}
+                  lang={lang}
+                  totalLikes={totalLikesCount}
+                />
+              )}
             </div>
           );
         });
@@ -191,11 +235,76 @@ const BlogPage = () => {
           const totalLikesCount = postLikes ? postLikes.total_like_count : 0;
           return (
             <div key={i}>
-              <SingleCard
-                post={blog}
-                lang={lang}
-                totalLikes={totalLikesCount}
-              />
+              {blog.isApprove == 1 && (
+                <SingleCard
+                  post={blog}
+                  lang={lang}
+                  totalLikes={totalLikesCount}
+                />
+              )}
+            </div>
+          );
+        });
+      break;
+
+    // Add more cases for other filters
+    case "paper":
+      content = filteredPosts
+        .filter((post) => post.category === "paper")
+        .map((blog, i) => {
+          const postLikes = totalLike?.find((like) => like.post_id === blog.id);
+          const totalLikesCount = postLikes ? postLikes.total_like_count : 0;
+          return (
+            <div key={i}>
+              {blog.isApprove == 1 && (
+                <SingleCard
+                  post={blog}
+                  lang={lang}
+                  totalLikes={totalLikesCount}
+                />
+              )}
+            </div>
+          );
+        });
+      break;
+
+    // Add more cases for other filters
+    case "food":
+      content = filteredPosts
+        .filter((post) => post.category === "food")
+        .map((blog, i) => {
+          const postLikes = totalLike?.find((like) => like.post_id === blog.id);
+          const totalLikesCount = postLikes ? postLikes.total_like_count : 0;
+          return (
+            <div key={i}>
+              {blog.isApprove == 1 && (
+                <SingleCard
+                  post={blog}
+                  lang={lang}
+                  totalLikes={totalLikesCount}
+                />
+              )}
+            </div>
+          );
+        });
+      break;
+
+    // Add more cases for other filters
+    case "tire":
+      content = filteredPosts
+        .filter((post) => post.category === "tire")
+        .map((blog, i) => {
+          const postLikes = totalLike?.find((like) => like.post_id === blog.id);
+          const totalLikesCount = postLikes ? postLikes.total_like_count : 0;
+          return (
+            <div key={i}>
+              {blog.isApprove == 1 && (
+                <SingleCard
+                  post={blog}
+                  lang={lang}
+                  totalLikes={totalLikesCount}
+                />
+              )}
             </div>
           );
         });
@@ -210,11 +319,13 @@ const BlogPage = () => {
 
           return (
             <div key={i}>
-              <SingleCard
-                post={blog}
-                lang={lang}
-                totalLikes={totalLikesCount}
-              />
+              {blog.isApprove == 1 && (
+                <SingleCard
+                  post={blog}
+                  lang={lang}
+                  totalLikes={totalLikesCount}
+                />
+              )}
             </div>
           );
         });
@@ -227,7 +338,13 @@ const BlogPage = () => {
 
         return (
           <div key={i}>
-            <SingleCard post={blog} lang={lang} totalLikes={totalLikesCount} />
+            {blog.isApprove == 1 && (
+              <SingleCard
+                post={blog}
+                lang={lang}
+                totalLikes={totalLikesCount}
+              />
+            )}
           </div>
         );
       });
@@ -248,6 +365,17 @@ const BlogPage = () => {
             className="input input-bordered input-primary w-full  max-w-xl"
           />
         </form>
+
+        <button
+          className="btn btn-primary "
+          onClick={() => {
+            setLang(!lang);
+            toggleLanguage();
+          }}
+        >
+          {" "}
+          <Languages /> Translate
+        </button>
       </div>
 
       {/* for sub buttons  */}
@@ -255,11 +383,11 @@ const BlogPage = () => {
         {wastType.map((t, i) => {
           return (
             <div
-              className="btn btn-outline"
+              className="btn btn-outline "
               key={i}
               onClick={() => handleButtonClick(t.title)}
             >
-              {t.title}
+              <p className="first-letter:uppercase">{t.title}</p>
             </div>
           );
         })}

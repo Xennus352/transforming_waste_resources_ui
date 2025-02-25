@@ -17,6 +17,7 @@ const HandTable = () => {
               <th></th>
               <th>Title</th>
               <th>Description</th>
+              <th>Description In Burmese</th>
               <th>Picture</th>
               <th>Actions</th>
             </tr>
@@ -36,8 +37,8 @@ const HandTable = () => {
                     <th>{index + 1}</th>
                     <td>{blog.title}</td>
                     <td>{blog.description}</td>
-                    <td className=" col-span-1">{blog.description_burmese}</td>
-                    <td></td>
+                    <td>{blog.description_burmese}</td>
+                    
                     <td className="p-0">
                       <img
                         src={blog.waste_pic}

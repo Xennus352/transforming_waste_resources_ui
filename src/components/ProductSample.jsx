@@ -8,6 +8,15 @@ const ProductSample = () => {
   //   only show 4 products
   const limitedProducts = products ? products.slice(0, 4) : [];
   const navigate = useNavigate();
+
+  // word split function
+  const truncateDescription = (description, wordLimit) => {
+    if (!description) return "";
+    const words = description.split(" ");
+    return words.length > wordLimit
+      ? words.slice(0, wordLimit).join(" ") + "..."
+      : description;
+  };
   return (
     <motion.div
       initial={{ opacity: 0, x: -60 }}
@@ -15,7 +24,7 @@ const ProductSample = () => {
         opacity: 1,
         x: 0,
         transition: {
-          delay: 0.5 , // Delay the second animation by the duration of the first
+          delay: 0.5, // Delay the second animation by the duration of the first
           type: "spring",
           duration: 0.6,
           bounce: 0.7,
@@ -27,7 +36,7 @@ const ProductSample = () => {
         {limitedProducts?.map((product) => {
           return (
             <div
-              className="lg:1/4 rounded overflow-x-hidden shadow-lg p-4"
+              className="lg:w-1/4 w-56 md:w-80 rounded overflow-x-hidden shadow-lg p-4"
               key={product.id}
             >
               <img
@@ -39,9 +48,11 @@ const ProductSample = () => {
                 <h3 className="text-lg font-semibold">
                   {product.product_name}
                 </h3>
-                <p className="text-gray-700 text-sm">{product.description}</p>
+                <p className="text-gray-700 text-sm">
+                  {truncateDescription(product.description, 20)}
+                </p>
                 <p className="text-gray-900 font-bold text-xl mt-2">
-                  {product.price}
+                  {product.price} MMK
                 </p>
               </div>
               <button

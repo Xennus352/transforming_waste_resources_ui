@@ -24,17 +24,14 @@ const OurInfo = () => {
       </div>
 
       {/* container */}
-      <div className="flex items-center justify-evenly m-2 p-2 gap-3">
+      <div className="flex items-center justify-center m-2 p-2 gap-3">
         {/* left  */}
         <div>
           <h1 className="text-xl font-bold">Address</h1>
 
           <p>Myanmar, Bago , Taungoo</p>
           <p>Basic Computer Education High Private School Taungoo</p>
-        </div>
 
-        {/* right  */}
-        <div>
           <h1 className="text-xl font-bold">Email Address</h1>
           <p className="underline">xennus.dev@gmail.com</p>
         </div>

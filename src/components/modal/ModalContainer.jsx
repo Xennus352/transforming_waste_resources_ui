@@ -34,9 +34,9 @@ const ModalContainer = () => {
       </CommentModalBox>
 
       {/* for product create modal  */}
-      <CommentModalBox title={"Create Product!"} id={"product"}>
+      <ModalBox title={"Create Product!"} id={"product"}>
         <Product />
-      </CommentModalBox>
+      </ModalBox>
 
       {/* for admin post blog modal  */}
       <ModalBox title={"Creating Blog"} id={"create-blog-form"}>

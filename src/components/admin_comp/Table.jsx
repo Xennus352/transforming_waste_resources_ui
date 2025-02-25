@@ -28,6 +28,7 @@ const Table = () => {
               <th></th>
               <th>Title</th>
               <th>Description</th>
+              <th>Description In Burmese</th>
               <th>Picture</th>
               <th>Actions</th>
             </tr>
@@ -47,8 +48,8 @@ const Table = () => {
                     <th>{index + 1}</th>
                     <td>{blog.title}</td>
                     <td>{blog.content}</td>
-                    <td className=" col-span-1">{blog.contentInBurmese}</td>
-                    <td></td>
+                    <td>{blog.contentInBurmese}</td>
+                    
                     <td className="p-0">
                       <img
                         src={blog.picture}

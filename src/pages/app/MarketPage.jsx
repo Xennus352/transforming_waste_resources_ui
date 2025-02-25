@@ -42,10 +42,10 @@ const MarketPage = () => {
   //* specific button array
   const wastType = [
     { title: "all" },
-    { title: "water" },
-    { title: "air" },
     { title: "ground" },
     { title: "plastic" },
+    { title: "tire" },
+    { title: "paper" },
     { title: "other" },
   ];
 
@@ -70,32 +70,6 @@ const MarketPage = () => {
       break;
 
     // Add more cases for other filters
-    case "water":
-      content = sortedFilteredPosts
-        .filter((post) => post.category === "water")
-        .map((blog, i) => {
-          return (
-            <div key={i}>
-              <MarketCard post={blog} />
-            </div>
-          );
-        });
-      break;
-
-    // Add more cases for other filters
-    case "air":
-      content = sortedFilteredPosts
-        .filter((post) => post.category === "air")
-        .map((blog, i) => {
-          return (
-            <div key={i}>
-              <MarketCard post={blog} />
-            </div>
-          );
-        });
-      break;
-
-    // Add more cases for other filters
     case "ground":
       content = sortedFilteredPosts
         .filter((post) => post.category === "ground")
@@ -112,6 +86,32 @@ const MarketPage = () => {
     case "plastic":
       content = sortedFilteredPosts
         .filter((post) => post.category === "plastic")
+        .map((blog, i) => {
+          return (
+            <div key={i}>
+              <MarketCard post={blog} />
+            </div>
+          );
+        });
+      break;
+
+    // Add more cases for other filters
+    case "tire":
+      content = sortedFilteredPosts
+        .filter((post) => post.category === "tire")
+        .map((blog, i) => {
+          return (
+            <div key={i}>
+              <MarketCard post={blog} />
+            </div>
+          );
+        });
+      break;
+
+    // Add more cases for other filters
+    case "paper":
+      content = sortedFilteredPosts
+        .filter((post) => post.category === "paper")
         .map((blog, i) => {
           return (
             <div key={i}>

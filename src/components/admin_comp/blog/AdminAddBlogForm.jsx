@@ -58,12 +58,12 @@ const AdminAddBlogForm = () => {
         />
         <textarea
           {...register("description", { required: true })}
-          className="textarea textarea-primary w-full"
+          className="textarea textarea-primary w-full  whitespace-pre-wrap"
           placeholder="Description in English"
         ></textarea>
         <textarea
           {...register("description_burmese", { required: true })}
-          className="textarea textarea-primary w-full"
+          className="textarea textarea-primary w-full whitespace-pre-wrap"
           placeholder="Description in Burmese"
         ></textarea>
 
