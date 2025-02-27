@@ -1,17 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { motion } from "motion/react";
+import logo1 from "../assets/homepage/1.jpg";
+import logo2 from "../assets/homepage/2.jpg";
+import logo3 from "../assets/homepage/3.jpg";
+import logo4 from "../assets/homepage/4.jpg";
+import logo7 from "../assets/homepage/7.jpg";
+import logo6 from "../assets/homepage/6.jpg";
 
 const Carousel = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const totalItems = 4; // Total number of carousel items
 
   // Array of images for the carousel
-  const images = [
-    "https://img.daisyui.com/images/stock/photo-1625726411847-8cbb60cc71e6.webp",
-    "https://img.daisyui.com/images/stock/photo-1609621838510-5ad474b7d25d.webp",
-    "https://img.daisyui.com/images/stock/photo-1414694762283-acccc27bca85.webp",
-    "https://img.daisyui.com/images/stock/photo-1665553365602-b2fb8e5d1707.webp",
-  ];
+  const images = [logo7, logo2, logo3, logo4];
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -26,31 +27,28 @@ const Carousel = () => {
   };
 
   // Define the animation properties
-const animationProps = {
-  initial: { opacity: 0, x: -20 },
-  animate: {
+  const animationProps = {
+    initial: { opacity: 0, x: -20 },
+    animate: {
       opacity: 1,
       x: 0,
       transition: {
-          delay: 0.2,
-          type: "spring",
-          duration: 0.3,
-          bounce: 0.4,
+        delay: 0.2,
+        type: "spring",
+        duration: 0.3,
+        bounce: 0.4, 
       },
-  },
-};
+    },
+  };
 
   return (
-    <motion.div
-      className="relative"
-      {...animationProps}
-    >
-      <div className="carousel w-full">
+    <motion.div className="relative" {...animationProps}>
+      <div className="carousel w-full ">
         {images.map((image, index) => (
           <div
-          {...animationProps}
+            {...animationProps}
             key={index}
-            className={`carousel-item w-full transition-opacity duration-500 ${
+            className={`carousel-item w-full transition-opacity h-3/4 object-cover duration-500 ${
               currentIndex === index ? "opacity-100" : "opacity-0"
             }`}
             style={{
@@ -59,7 +57,7 @@ const animationProps = {
           >
             <img
               src={image}
-              className="w-full"
+              className="w-full h-96 object-cover object-center"
               alt={`Carousel Item ${index + 1}`}
             />
           </div>
@@ -85,7 +83,7 @@ const animationProps = {
 export default Carousel;
 
 // import React, { useEffect, useState } from "react";
-// import { motion } from "motion/react"; // Ensure you're importing from 'framer-motion'
+// import { motion } from "motion/react";
 
 // const Carousel = () => {
 //   const [currentIndex, setCurrentIndex] = useState(0);

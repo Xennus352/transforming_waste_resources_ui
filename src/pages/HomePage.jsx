@@ -5,6 +5,7 @@ import Divider from "../components/Divider";
 import AboutCard from "../components/AboutCard";
 import ProductSample from "../components/ProductSample";
 import { motion } from "motion/react";
+import PostSample from "../components/PostSample";
 
 const HomePage = () => {
   return (
@@ -12,6 +13,7 @@ const HomePage = () => {
       {/* carousel  */}
       <Carousel />
 
+      <PostSample />
       {/* ProductSample */}
       <Divider title="Product Sample" />
       <ProductSample />

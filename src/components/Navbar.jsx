@@ -35,7 +35,7 @@ const Navbar = () => {
       icon: <Contact />,
     },
     {
-      title: "Infomation",
+      title: "Information",
       path: "/organization",
       icon: <Building2 />,
     },
@@ -58,10 +58,7 @@ const Navbar = () => {
               alt="Company Logo"
             />
           </div> */}
-          <ReactTypingEffect
-            className="text-4xl"
-            text={["Waste to Wealth "]}
-          />
+          <ReactTypingEffect className="text-4xl" text={["Waste to Wealth "]} />
         </div>
         <div className="bg-[url('assets/menu-bg.png')] bg-cover p-3">
           <ul className=" flex items-center justify-evenly flex-wrap">

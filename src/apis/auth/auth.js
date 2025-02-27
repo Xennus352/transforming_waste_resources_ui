@@ -3,7 +3,10 @@ import { closeModal } from "../../utils/modal";
 import toast from "react-hot-toast";
 
 
+
 export const login = async (data) => {
+
+
   try {
     // api url
     const URL = "http://localhost:8000/api/auth/login.php";
@@ -14,6 +17,7 @@ export const login = async (data) => {
       localStorage.setItem("session_token", response.data.session_token); //token
       localStorage.setItem("tokenExpiration", response.data.tokenExpiration); //exp time
       console.log("Login successful. Session token stored.");
+
 
       closeModal("login-form");
     } else {

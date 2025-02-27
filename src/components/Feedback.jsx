@@ -49,19 +49,15 @@ const Feedback = () => {
             Contact to us
           </h2>
           <div
-            className=" w-full md:grid md:grid-cols-3 p-4 
+            className=" w-full p-4 
             gap-6 flex flex-col justify-center 
             bg-opacity-50 backdrop-blur-lg rounded-lg"
           >
             <div className="">
               {/* left side  */}
-              <div className="md:flex md:justify-center">
-                <img
-                  className=" object-cover w-full rounded-full sm:rounded-md md:rounded-sm hover:rounded-xl hover:shadow-xl hover:cursor-pointer m-1"
-                  src={user? user?.picture : recycleSign}
-                  alt="profilePic"
-                />
-              </div>
+              {/* <div className="md:flex md:justify-center">
+              
+              </div> */}
             </div>
             {/* mid side  */}
             <div className="border rounded-lg  col-span-2 p-4">
